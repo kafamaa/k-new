@@ -9,7 +9,7 @@ import { CalendarButton, FixturesCalendar, FollowButton, PrintButton } from './P
 import { directionsHref, publicUrl, readingMinutes } from '../lib/publicExtras'
 import { MatchKeyEvents, MatchLineups, MatchStatistics, MatchTimeline, OrganizationSections, TournamentDraw, TournamentLive } from './PublicPageParts'
 import { archiveOptions, archiveTournaments, EMPTY_ARCHIVE_FILTERS, isArchivedTournament, loadTeamManagement, playerManagementLabel, teamManagementLabel, type ArchiveFilters, type TeamManagement } from '../lib/publicPages'
-import { filterOrganizations, getPublicMatchPage, loadOrganizationLocations, loadPlayerSports, loadPlayerTeams, loadTeamSports, loadTournamentCategories, NO_MATCH_EXTRAS, optionsFrom, placesState, type MatchExtras } from '../lib/publicPages'
+import { filterOrganizations, getPublicMatchPage, loadOrganizationLocations, loadPlayerSports, loadPlayerTeams, loadTeamSports, loadTournamentCategories, matchEventLabel, NO_MATCH_EXTRAS, optionsFrom, placesState, type MatchExtras } from '../lib/publicPages'
 import { loadCapacity, loadMatchFeed, type Capacity, type FeedMatch } from '../lib/landing'
 import { pageSlice } from '../lib/directory'
 import type { MatchListFilters, MatchListLabels, PlayerHistoryFilterLabels, TournamentDirectoryDetail } from '../lib/publicData'
@@ -1079,8 +1079,8 @@ function PlayerHistoryDetail({ record }: { record: Record<string, unknown> }) {
   </>
 }
 
-type MatchTab = 'timeline' | 'lineups' | 'statistics'
-const MATCH_TABS: Array<{ id: MatchTab; label: string }> = [{ id: 'timeline', label: 'Timeline' }, { id: 'lineups', label: 'Lineups' }, { id: 'statistics', label: 'Statistics' }]
+type MatchTab = 'timeline' | 'lineups' | 'statistics' | 'commentary'
+const MATCH_TABS: Array<{ id: MatchTab; label: string }> = [{ id: 'timeline', label: 'Timeline' }, { id: 'lineups', label: 'Lineups' }, { id: 'statistics', label: 'Statistics' }, { id: 'commentary', label: 'Commentary' }]
 
 // Match center for guests: scoreboard first, then key events, then tabs. The
 // tabs are keyboard-operable tab elements rather than form controls, because
@@ -1185,6 +1185,7 @@ function MatchPublicDetail({ record, reportRef }: { record: Record<string, unkno
           {extras.available && tab === 'timeline' && <MatchTimeline extras={extras} home={homeName} away={awayName} />}
           {extras.available && tab === 'lineups' && <MatchLineups extras={extras} home={homeName} away={awayName} />}
           {extras.available && tab === 'statistics' && <MatchStatistics extras={extras} home={homeName} away={awayName} />}
+          {extras.available && tab === 'commentary' && (extras.events.length ? <ul className="pg-events pg-commentary">{extras.events.map((e, i) => <li key={i} className={`pg-event pg-event-${e.side ?? 'none'}`}><span className="pg-minute">{e.minute !== null ? `${e.minute}${e.minuteExtra ? `+${e.minuteExtra}` : ''}′` : '–'}</span><span className="pg-event-icon" aria-hidden="true">•</span><span className="pg-event-text"><strong>{matchEventLabel(e.type)}</strong><small>{e.player ? `${e.player}${e.side ? ` (${e.side === 'home' ? homeName : awayName})` : ''}` : 'Match update'}</small></span></li>)}</ul> : <EdEmpty>No commentary yet.</EdEmpty>)}
         </section>
 
         <p className="private-note">Identity documents, contact details, payments, internal notes, result submitters and confirmation reasons, event recording metadata, account identifiers, and workspace controls are never shown on public pages.</p>

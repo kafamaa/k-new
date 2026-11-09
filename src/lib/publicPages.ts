@@ -12,7 +12,7 @@ import type { Capacity } from './landing'
 const missing = (message: string) => /could not find the function|does not exist|schema cache/i.test(message)
 
 // --- Match detail ------------------------------------------------------------------
-export type MatchEvent = { minute: number | null; type: string; side: 'home' | 'away' | null; player: string | null; playerSlug: string | null }
+export type MatchEvent = { minute: number | null; minuteExtra: number | null; type: string; side: 'home' | 'away' | null; player: string | null; playerSlug: string | null }
 export type LineupPlayer = { side: 'home' | 'away'; player: string; playerSlug: string; starter: boolean }
 export type MatchExtras = { available: boolean; official: boolean; homeScore: number | null; awayScore: number | null; outcome: string | null; events: MatchEvent[]; lineups: LineupPlayer[]; privatePlayers: number }
 export const NO_MATCH_EXTRAS: MatchExtras = { available: false, official: false, homeScore: null, awayScore: null, outcome: null, events: [], lineups: [], privatePlayers: 0 }
@@ -30,7 +30,7 @@ export function toMatchExtras(raw: unknown): MatchExtras {
     available: true,
     official: row.official === true,
     homeScore: asNumber(row.home_score), awayScore: asNumber(row.away_score), outcome: asText(row.outcome),
-    events: events.map(event => ({ minute: asNumber(event.minute), type: String(event.type ?? ''), side: asSide(event.side), player: asText(event.player), playerSlug: asText(event.player_slug) })).filter(event => event.type),
+    events: events.map(event => ({ minute: asNumber(event.minute), minuteExtra: asNumber(event.minute_extra), type: String(event.type ?? ''), side: asSide(event.side), player: asText(event.player), playerSlug: asText(event.player_slug) })).filter(event => event.type),
     lineups: lineups.map(item => ({ side: asSide(item.side) ?? 'home', player: asText(item.player) ?? '', playerSlug: asText(item.player_slug) ?? '', starter: item.starter === true })).filter(item => item.player && item.playerSlug),
     privatePlayers: asNumber(row.private_players) ?? 0,
   }

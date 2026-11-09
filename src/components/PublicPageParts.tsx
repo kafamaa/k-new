@@ -39,7 +39,7 @@ function EventLine({ event, home, away }: { event: MatchEvent; home: string; awa
   const initials = (event.player ?? '').trim().split(/\s+/).slice(0, 2).map(w => w[0] ?? '').join('').toUpperCase() || '?'
   const icon = EVENT_ICONS[event.type] ?? '•'
   return <li className={`pg-event pg-event-${event.side ?? 'none'}`}>
-    <span className="pg-minute">{event.minute !== null ? `${event.minute}′` : '–'}</span>
+    <span className="pg-minute">{event.minute !== null ? `${event.minute}${event.minuteExtra ? `+${event.minuteExtra}` : ''}′` : '–'}</span>
     <span className="pg-event-icon" aria-hidden="true">{icon}</span>
     <span className="pg-event-avatar" aria-hidden="true">{initials}</span>
     <span className="pg-event-text"><strong>{matchEventLabel(event.type)}</strong>
