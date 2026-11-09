@@ -328,6 +328,14 @@ body { background: var(--ed-paper); color: var(--ed-text); font-family: var(--ed
 /* ---------- Detail pages: wide cover, identity, sticky tabs ---------- */
 .ed-detail { padding-bottom: var(--s8); }
 .ed-cover { position: relative; isolation: isolate; min-height: clamp(120px, 18vh, 180px); display: grid; align-items: end; color: #fff; overflow: visible; background: var(--ed-ink); }
+.lp-live-ticker { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: linear-gradient(90deg, #041827, #0A5E77); color: #fff; overflow: hidden; }
+.lp-live-ticker-label { font: 700 12px 'Space Grotesk', sans-serif; letter-spacing: .1em; color: #FF3B4D; display: inline-flex; align-items: center; gap: 6px; flex: none; }
+.lp-live-ticker-track { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+.lp-live-ticker-track::-webkit-scrollbar { display: none; }
+.lp-live-ticker-item { display: inline-flex; align-items: center; gap: 8px; color: #EAF9FD; text-decoration: none; font-size: 12px; white-space: nowrap; }
+.lp-live-ticker-item:hover { color: #00CFE8; }
+.lp-live-ticker-score { font: 700 13px 'Space Grotesk', sans-serif; color: #00CFE8; }
+.lp-live-ticker-names { font-size: 12px; color: #9FDCE8; }
 /* Dark mode basics */
 html.dark body { background: #0B1F33; color: #EAF9FD; }
 html.dark .ed-panel, html.dark .ed-card, html.dark .ic-card { background: rgba(8,42,64,.6); border-color: rgba(0,207,232,.2); color: #EAF9FD; }

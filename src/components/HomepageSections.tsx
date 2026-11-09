@@ -9,7 +9,7 @@ import { publicTournamentBranding } from '../lib/tournamentBranding'
 import { formatDay, sportClass, sportName } from '../lib/display'
 import { activeTeams, completedTournaments, countPublished, daysUntil, formatMvtTime, isLive, loadCapacity, loadMatchFeed, loadTopPlayers, maldivesDayRange, matchStateLabel, NEEDS_032, officialScore, pickSpotlight, registrationInfo, REGISTRATION_STATUS_TEXT, teamLabel, timeAgo, TOURNAMENT_STATUS_TEXT, tournamentStatus, type Capacity, type FeedMatch, type Loaded } from '../lib/landing'
 import { TournamentCover, TournamentLogo } from './TournamentBranding'
-import { Chip } from './Editorial'
+import { Chip, Crest } from './Editorial'
 import { FinalCallToAction } from './LandingFeatures'
 import { CoverScene, HERO_PHOTO, HERO_WIDE, PersonAvatar, TeamLogo, SportGlyph } from './HomeArt'
 import { HIGHLIGHT_KIND_LABELS, loadLiveHighlights, type Highlight } from '../lib/platformHighlights'
@@ -209,6 +209,17 @@ export function HomepageSections({ onCreateTournament }: { onCreateTournament: (
   </dl>
 
   return <div className="lp lp-home">
+    {live.status === 'ready' && live.data.length > 0 && <div className="lp-live-ticker" role="region" aria-label="Live matches">
+      <span className="lp-live-ticker-label"><span className="ed-live-dot" aria-hidden="true" /> LIVE</span>
+      <div className="lp-live-ticker-track">
+        {live.data.map(m => <a key={m.id} className="lp-live-ticker-item" href={`#matches/${encodeURIComponent(m.id)}`}>
+          <Crest name={m.home.name ?? 'Team'} logoUrl={m.home.logo} size="sm" />
+          <span className="lp-live-ticker-score">{m.homeScore !== null && m.awayScore !== null ? `${m.homeScore}–${m.awayScore}` : 'vs'}</span>
+          <Crest name={m.away.name ?? 'Team'} logoUrl={m.away.logo} size="sm" />
+          <span className="lp-live-ticker-names">{m.home.name ?? 'Team'} vs {m.away.name ?? 'Team'}</span>
+        </a>)}
+      </div>
+    </div>}
     {!online && <p className="lp-offline" role="status"><WifiOff size={16} /> <span><strong>You are offline.</strong> Previously viewed information may be available, but live scores can be outdated.</span></p>}
 
     {/* Landing layout (owner mockup, 2026-11-04): hero with the live or next real match, Find your
