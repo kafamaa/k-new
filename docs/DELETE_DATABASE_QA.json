@@ -1,0 +1,6 @@
+{
+  "checks": 36,
+  "migration": "20261105144931_managed_record_deletion.sql",
+  "result": "passed",
+  "environment": "Isolated PostgreSQL-compatible PGlite with minimal schema, not live Supabase"
+}

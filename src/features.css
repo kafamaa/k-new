@@ -1,0 +1,39 @@
+/* Panels added with the history engine, completion, identity, import, news,
+   invitations and offline work. Uses the shared tokens from styles.css. */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.standings-table, .import-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.standings-table th, .standings-table td, .import-table th, .import-table td { padding: .45rem .6rem; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.standings-table th, .import-table th { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; color: var(--accent-text); }
+.standings-table td:nth-child(n+3), .standings-table th:nth-child(n+3) { text-align: right; }
+.import-table .row-error td { background: rgba(255, 59, 77, .08); }
+.import-table .row-warn td { background: rgba(245, 183, 46, .12); }
+.team-picker { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .6rem .8rem; display: flex; flex-wrap: wrap; gap: .4rem 1rem; }
+.team-picker legend { font-weight: 700; padding: 0 .3rem; }
+.team-picker label, .checkbox-row { display: inline-flex; align-items: center; gap: .4rem; }
+.fixture-preview { border: 1px dashed var(--line); border-radius: var(--radius-sm); padding: .6rem .8rem; max-height: 18rem; overflow: auto; }
+.lineup-editor .lineup-team { margin-bottom: .6rem; }
+.lineup-editor li { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .2rem 0; }
+.lineup-editor input[type="number"] { width: 5rem; }
+.next-round-stage { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+.award-form, .guardian-form, .identity-form, .invite-form, .news-form { display: grid; gap: .6rem; max-width: 40rem; }
+.award-player { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .5rem; }
+.managed-player { flex-wrap: wrap; }
+.managed-player-panels { flex-basis: 100%; display: grid; gap: .8rem; margin-top: .6rem; }
+.document-list li, .news-list li { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; }
+.invite-token { display: block; word-break: break-all; padding: .5rem; margin: .4rem 0; border-radius: var(--radius-sm); background: var(--paper); user-select: all; }
+.button-row.compact { gap: .3rem; }
+@media (max-width: 600px) {
+  .award-form, .guardian-form, .identity-form, .invite-form, .news-form { max-width: none; }
+  .team-picker { flex-direction: column; }
+}
+
+/* Final plan 37: Teams & Players tabs (Claims, Possible duplicates, Imports). */
+.import-mapping { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .6rem; border: 1px solid var(--line); border-radius: 10px; padding: .7rem .8rem; margin: .6rem 0; min-width: 0; }
+.import-mapping legend { font-weight: 700; font-size: .85rem; padding: 0 .3rem; }
+.import-mapping label { display: grid; gap: .25rem; font-size: .82rem; min-width: 0; }
+.import-mapping select { width: 100%; min-width: 0; }
+.dup-groups { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+.dup-groups h3 { overflow-wrap: anywhere; }
+.claim-check-spacer { display: inline-block; width: 13px; flex: none; }
+.claim-tokens .result-row strong { overflow-wrap: anywhere; }
+.csv-import input[type="file"] { max-width: 100%; }

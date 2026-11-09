@@ -1,0 +1,809 @@
+{
+  "date": "2026-11-05",
+  "scope": "Isolated read-only visual fixtures, not live account or database acceptance",
+  "source_page_checks": [
+    {
+      "screen": "chooser",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-overview",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-profile",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-career",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-card",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-matches",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-requests",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-documents",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-activity",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-privacy",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "chooser",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-overview",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-profile",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-career",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-card",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-matches",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-requests",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-documents",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-activity",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "player-privacy",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-home",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-teams",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-players",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-organizations",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-tournaments",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-tournament",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-register",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-team",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-organization",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-player",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-home",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-teams",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-players",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-organizations",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-tournaments",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-tournament",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-register",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-team",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-organization",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-player",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-matches",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-standings",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-bracket",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-news",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-news-article",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-archive",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-search",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-matches",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-standings",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-bracket",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-news",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-news-article",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-archive",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-search",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-overview",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-tournaments",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-rosters",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-finance",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-history",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-staff",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-coaches",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-coach-profile",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-overview",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-tournaments",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-rosters",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-finance",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-history",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-staff",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-coaches",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "public-coach-profile",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-squad",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-invitations",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-applications",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-matches",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-profile",
+      "viewport_width": 1448,
+      "document_width": 1448,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-squad",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-invitations",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-applications",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-matches",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    },
+    {
+      "screen": "team-profile",
+      "viewport_width": 390,
+      "document_width": 390,
+      "heading_present": true,
+      "horizontal_overflow": false,
+      "browser_errors": []
+    }
+  ],
+  "interaction_screens": [
+    {
+      "name": "application-form-1448",
+      "overflow": false
+    },
+    {
+      "name": "application-review-1448",
+      "overflow": false
+    },
+    {
+      "name": "membership-edit-1448",
+      "overflow": false
+    },
+    {
+      "name": "membership-end-confirmation-1448",
+      "overflow": false
+    },
+    {
+      "name": "squad-add-player-1448",
+      "overflow": false
+    },
+    {
+      "name": "squad-membership-details-1448",
+      "overflow": false
+    },
+    {
+      "name": "squad-invitation-review-1448",
+      "overflow": false
+    },
+    {
+      "name": "payment-proof-empty-1448",
+      "overflow": false
+    },
+    {
+      "name": "payment-proof-selected-1448",
+      "overflow": false
+    },
+    {
+      "name": "roster-player-editor-1448",
+      "overflow": false
+    },
+    {
+      "name": "organizer-player-record-1448",
+      "overflow": false
+    },
+    {
+      "name": "organizer-find-player-1448",
+      "overflow": false
+    },
+    {
+      "name": "finance-add-transaction-1448",
+      "overflow": false
+    },
+    {
+      "name": "finance-edit-transaction-1448",
+      "overflow": false
+    },
+    {
+      "name": "staff-permissions-editor-1448",
+      "overflow": false
+    },
+    {
+      "name": "staff-invitation-1448",
+      "overflow": false
+    },
+    {
+      "name": "signin-1448",
+      "overflow": false
+    },
+    {
+      "name": "signup-1448",
+      "overflow": false
+    },
+    {
+      "name": "application-form-390",
+      "overflow": false
+    },
+    {
+      "name": "application-review-390",
+      "overflow": false
+    },
+    {
+      "name": "membership-edit-390",
+      "overflow": false
+    },
+    {
+      "name": "membership-end-confirmation-390",
+      "overflow": false
+    },
+    {
+      "name": "squad-add-player-390",
+      "overflow": false
+    },
+    {
+      "name": "squad-membership-details-390",
+      "overflow": false
+    },
+    {
+      "name": "squad-invitation-review-390",
+      "overflow": false
+    },
+    {
+      "name": "payment-proof-empty-390",
+      "overflow": false
+    },
+    {
+      "name": "payment-proof-selected-390",
+      "overflow": false
+    },
+    {
+      "name": "roster-player-editor-390",
+      "overflow": false
+    },
+    {
+      "name": "organizer-player-record-390",
+      "overflow": false
+    },
+    {
+      "name": "organizer-find-player-390",
+      "overflow": false
+    },
+    {
+      "name": "finance-add-transaction-390",
+      "overflow": false
+    },
+    {
+      "name": "finance-edit-transaction-390",
+      "overflow": false
+    },
+    {
+      "name": "staff-permissions-editor-390",
+      "overflow": false
+    },
+    {
+      "name": "staff-invitation-390",
+      "overflow": false
+    },
+    {
+      "name": "signin-390",
+      "overflow": false
+    },
+    {
+      "name": "signup-390",
+      "overflow": false
+    }
+  ],
+  "interaction_assertions": {
+    "checks": "Review preserves values; review/cancel/upload selection make no writes; dialog focus and Escape work; invitation checkbox gates sending; roster draft edit keeps persistence behind submission",
+    "errors": []
+  },
+  "tests": {
+    "passed": 947,
+    "total": 947,
+    "files": 90,
+    "success": true
+  },
+  "issues": [],
+  "limitations": [
+    "Fixture data is kept outside the packaged app.",
+    "These checks establish layout rendering, width containment and specific local interactions, not pixel equality with every mockup.",
+    "Empty-state coverage does not certify live populated standings, brackets or private records.",
+    "No real account login, database write, invitation send, email delivery, payment or deployment was performed."
+  ]
+}

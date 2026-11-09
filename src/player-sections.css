@@ -1,0 +1,61 @@
+/* Player workspace sections: card styles, invitations, documents, trophies. */
+
+/* Card style picker and the four approved designs. */
+.card-style-picker { display: flex; flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s4); }
+.card-style-swatch { display: inline-flex; align-items: center; gap: var(--s2); padding: 6px 14px 6px 6px; border-radius: var(--ed-radius-pill); border: 1px solid var(--ed-line-strong); background: var(--ed-surface); color: var(--ed-text); font-weight: 700; font-size: .875rem; cursor: pointer; }
+.card-style-swatch span { width: 26px; height: 26px; border-radius: 50%; }
+.card-style-swatch.active { border-color: var(--ed-accent-strong); box-shadow: 0 0 0 3px var(--ed-accent-soft); }
+.swatch-classic span { background: linear-gradient(135deg, #0b2a42, #00cfe8); }
+.swatch-ocean span { background: linear-gradient(135deg, #0f6f8f, #7fe6f3); }
+.swatch-gold span { background: linear-gradient(135deg, #2a2112, #f5b72e); }
+.swatch-night span { background: linear-gradient(135deg, #1e1b3a, #a78bfa); }
+.player-card.card-style-ocean { background: linear-gradient(180deg, #0f6f8f 0%, #073b52 100%); border-color: #7fe6f3; box-shadow: 0 0 0 2px rgba(127, 230, 243, .5), 0 18px 40px rgba(7, 59, 82, .45); }
+.player-card.card-style-gold { background: linear-gradient(180deg, #2a2112 0%, #0d0b07 100%); border-color: #f5b72e; box-shadow: 0 0 0 2px rgba(245, 183, 46, .55), 0 18px 40px rgba(13, 11, 7, .5); }
+.player-card.card-style-gold .player-card-mark b, .player-card.card-style-gold .star-on { color: #f5b72e; }
+.player-card.card-style-night { background: linear-gradient(180deg, #1e1b3a 0%, #0a0918 100%); border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167, 139, 250, .5), 0 18px 40px rgba(10, 9, 24, .5); }
+.player-card.card-style-night .player-card-mark b { color: #a78bfa; }
+.player-card-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+/* Team invitations. */
+.ps-invites { list-style: none; margin: var(--s3) 0 0; padding: 0; display: grid; gap: var(--s3); }
+.ps-invites li { display: grid; gap: var(--s3); padding: var(--s4); border-radius: var(--ed-radius); border: 1px solid var(--ed-accent); background: linear-gradient(180deg, var(--ed-accent-soft), transparent); }
+.ps-invite-head { display: flex; align-items: center; gap: var(--s3); }
+.ps-invite-head > div { display: grid; }
+.ps-invite-head small { color: var(--ed-muted); }
+.ps-invite-message { margin: 0; font-style: italic; color: var(--ed-text); }
+.ps-history { margin-top: var(--s3); color: var(--ed-muted); }
+.ps-history summary { cursor: pointer; font-weight: 700; }
+
+/* Documents: list with statuses. */
+.ps-upload { display: grid; align-content: end; gap: 4px; }
+.ps-upload small { color: var(--ed-muted); }
+.ps-docs { list-style: none; margin: 0; padding: 0; border-radius: var(--ed-radius); border: 1px solid var(--ed-line); background: var(--ed-surface); }
+.ps-docs li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-bottom: 1px solid var(--ed-line); }
+.ps-docs li:last-child { border-bottom: 0; }
+.ps-docs li > div:first-child { display: grid; gap: 2px; min-width: 0; }
+.ps-docs small { color: var(--ed-muted); overflow-wrap: anywhere; }
+.ps-review-note { color: var(--ed-warn) !important; }
+.ps-doc-status { padding: 4px 10px; border-radius: var(--ed-radius-pill); font-size: .75rem; font-weight: 700; background: var(--ed-surface-2); color: var(--ed-muted); white-space: nowrap; }
+.ps-doc-status.status-verified { background: rgba(14, 154, 106, .12); color: #0a7a53; }
+.ps-doc-status.status-under_review, .ps-doc-status.status-changes_requested { background: rgba(167, 107, 12, .12); color: #7d4f06; }
+.ps-doc-status.status-rejected, .ps-doc-status.status-expired { background: rgba(229, 55, 74, .12); color: #b51f31; }
+.ps-review-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.ps-review-actions input { min-height: 36px; padding: 0 var(--s3); border-radius: var(--ed-radius-pill); border: 1px solid var(--ed-line-strong); font: inherit; font-size: .85rem; }
+@media (max-width: 720px) { .ps-docs li { grid-template-columns: 1fr; } }
+
+/* Trophy cabinet. */
+.ps-trophies { list-style: none; margin: var(--s3) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: var(--s3); }
+.ps-trophies li { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: var(--s3); padding: var(--s3); border-radius: var(--ed-radius); border: 1px solid var(--ed-line); background: var(--ed-surface); }
+.ps-trophies li.trophy { border-color: rgba(214, 160, 34, .45); background: linear-gradient(180deg, #fffaf0, #fff); }
+.ps-trophy-image { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 14px; overflow: hidden; background: var(--ed-surface-2); color: #c98d0b; }
+.ps-trophies li:not(.trophy) .ps-trophy-image { color: var(--ed-accent-strong); }
+.ps-trophy-image img { width: 100%; height: 100%; object-fit: cover; }
+.ps-trophy-body { display: grid; gap: 2px; min-width: 0; }
+.ps-trophy-body small { color: var(--ed-muted); }
+.ps-source { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
+.award-preview { width: 96px; height: 96px; object-fit: cover; border-radius: 14px; border: 1px solid var(--ed-line); }
+
+/* Public trophy images. */
+.ed-honours li.has-image { grid-template-columns: none; }
+.ed-honour-image { flex: none; width: 56px; height: 56px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(214, 160, 34, .45); background: #fff; }
+.ed-honours li span small + small { font-size: .72rem; }

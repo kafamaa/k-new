@@ -1,0 +1,395 @@
+/* Shared mockup visual system, before consistency and workspace-specific rules. */
+:root {
+  --mockup-navy: #0a1f44;
+  --mockup-ink: #0b2540;
+  --mockup-turquoise: #08d6ce;
+  --mockup-muted: #405b70;
+  --mockup-glass: rgba(255, 255, 255, .76);
+  --mockup-edge: rgba(255, 255, 255, .9);
+  --mockup-shadow: 0 2px 4px #0b254008, 0 12px 28px #0b25400c;
+  --ds-navy: var(--mockup-navy);
+  --ds-turquoise: var(--mockup-turquoise);
+  --ds-text: var(--mockup-ink);
+  --ds-radius: 20px;
+  --ed-accent: var(--mockup-turquoise);
+}
+.app-shell.in-workspace {
+  --wsx-navy: var(--mockup-navy);
+  --wsx-cyan: var(--mockup-turquoise);
+  --wsi-lagoon: var(--mockup-turquoise);
+  --ed-accent: var(--mockup-turquoise);
+  --ed-text: var(--mockup-ink);
+  --ed-muted: var(--mockup-muted);
+}
+.app-shell:is(.in-workspace, .is-island) {
+  background-color: #d9f3fa;
+  background-image: radial-gradient(ellipse at 85% 5%, #ffffffb8, transparent 55%),
+    radial-gradient(ellipse at 5% 75%, #69e3e840, transparent 58%),
+    linear-gradient(145deg, #edfaff, #c7edf8 65%, #bcebf5);
+  background-attachment: fixed;
+}
+/* Reuse existing assets and actual branding, never a mockup screenshot. */
+.app-shell .ed-topbar, .in-workspace .ws-appbar {
+  background: var(--mockup-navy);
+  border-bottom: 1px solid #ffffff26;
+}
+.in-workspace :is(.adm-stat, .adm-card, .panel-block, .ed-panel, .pf-card, .ws-block),
+.app-shell.is-island .ed-main :is(.ed-panel, .ed-table-wrap, .pd-filters) {
+  background: var(--mockup-glass);
+  border: 1px solid var(--mockup-edge);
+  border-radius: 20px;
+  box-shadow: var(--mockup-shadow);
+}
+/* Keep blur on large panels only, avoiding a compositing layer per table cell. */
+@supports (backdrop-filter: blur(12px)) {
+  .in-workspace :is(.ed-panel, .pf-card), .people-card, .person-about {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+.in-workspace :is(.adm-table, .ed-table) { font-size: .9375rem; }
+.in-workspace :is(.adm-table, .ed-table) th {
+  background: #c9eff580;
+  color: var(--mockup-ink);
+  font-size: .8125rem;
+  letter-spacing: .015em;
+  text-transform: none;
+}
+.in-workspace :is(.adm-table, .ed-table) td { padding-block: 16px; }
+.in-workspace :is(.adm-table, .ed-table) tbody tr:hover { background: #ffffff55; }
+.in-workspace :is(.adm-table-wrap, .ed-table-wrap) { overscroll-behavior-inline: contain; }
+.in-workspace :is(.ed-btn-primary, .primary-button) {
+  background: var(--mockup-turquoise);
+  color: var(--mockup-navy);
+  box-shadow: 0 5px 14px #08d6ce20;
+}
+/* Earlier dark-header rules must not make secondary actions white on light cards. */
+.app-shell.in-workspace :is(.ws-topbar, .ws-next) :is(.ed-btn-ghost, .outline-button, .ghost-button, .quiet-button) {
+  color: var(--mockup-ink);
+  border-color: #0b254066;
+  background: #ffffffc9;
+}
+.app-shell.in-workspace :is(.ws-topbar, .ws-next) :is(.ed-btn-ghost, .outline-button, .ghost-button, .quiet-button):hover:not(:disabled) {
+  color: #07646c;
+  background: #e4fbfb;
+  border-color: #087b8c;
+}
+.app-shell button:disabled { cursor: not-allowed; }
+.app-shell :is(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid #087b8c;
+  outline-offset: 3px;
+}
+.in-workspace :is(.ws-sidebar, .ws-appbar) :is(button, a):focus-visible,
+.app-shell .ed-topbar :is(button, a):focus-visible { outline-color: #78f9ed; }
+/* Public coach/referee cards use only fields returned by the published API. */
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  list-style: none;
+  margin: 18px 0 28px;
+  padding: 0;
+}
+.people-grid > li { min-width: 0; display: flex; }
+.people-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  width: 100%;
+  background: var(--mockup-glass);
+  border: 1px solid var(--mockup-edge);
+  border-radius: 22px;
+  box-shadow: var(--mockup-shadow);
+}
+.people-card-identity { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.people-card-identity > div { min-width: 0; }
+.people-avatar {
+  width: 70px; height: 70px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #dceff5, #bceeea);
+  color: var(--mockup-navy);
+}
+.people-card h2 { margin: 0 0 7px; font: 800 1.25rem/1.25 var(--ed-font-display); overflow-wrap: anywhere; }
+.people-role { display: inline-flex; padding: 4px 12px; background: #aff1e6; color: #0b514e; border-radius: 999px; font-size: .8125rem; font-weight: 700; }
+.people-location { display: flex; align-items: center; gap: 7px; color: var(--mockup-muted); }
+.people-location svg { flex: none; }
+.people-card :is(.people-location, .people-count, .people-card-bio) { margin: 0; font-size: .9375rem; overflow-wrap: anywhere; }
+.people-card-bio { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--mockup-muted); }
+.people-card .ed-btn { margin-top: auto; width: 100%; min-height: 46px; }
+.people-result-count { color: var(--mockup-muted); font-weight: 600; }
+.person-about { padding: 24px; margin-block: 20px; border-radius: 20px; background: var(--mockup-glass); border: 1px solid var(--mockup-edge); box-shadow: var(--mockup-shadow); }
+.person-about h2 { margin: 14px 0 8px; }
+.person-about p { margin: 0; max-width: 75ch; white-space: pre-line; overflow-wrap: anywhere; }
+@media (max-width: 1000px) { .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .app-shell.is-island .ed-topbar { padding-inline: 12px; gap: 8px; }
+  .app-shell.is-island .ed-topbar-brand { flex: 1; min-width: 0; gap: 5px; }
+  .app-shell.is-island .ed-topbar-brand .brand-word { font-size: clamp(.82rem, 3.6vw, 1.05rem); letter-spacing: .03em; }
+  .app-shell.is-island .ed-topbar-brand .brand-mark { width: 24px; height: 24px; }
+  .app-shell.is-island .ed-topactions { gap: 6px; flex: none; margin-inline-start: auto; }
+  .app-shell.is-island .ed-topactions > .ed-icon-btn { width: 32px; min-width: 32px; height: 36px; padding: 0; }
+  .app-shell.is-island .ed-signin-btn { min-width: 64px; min-height: 36px; padding-inline: 10px; font-size: .875rem; }
+  .people-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .people-card, .person-about { padding: 20px; }
+  .people-avatar { width: 58px; height: 58px; }
+  .in-workspace :is(.adm-table, .ed-table) td { padding-block: 12px; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .people-card, .person-about, .in-workspace :is(.ed-panel, .pf-card, .adm-card, .adm-stat) { background: #f4fcff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) { .people-card, .app-shell .ed-btn { transition: none; } }
+/* Organizer/cockpit and administrative panels share the same visual language. */
+.app-shell :is(.organizer-section, .cockpit-section, .adm-stack) :is(.panel-block, .ed-panel, .adm-stat, .adm-card, .adm-fieldset) {
+  background: var(--mockup-glass);
+  border-color: var(--mockup-edge);
+  border-radius: 20px;
+  box-shadow: var(--mockup-shadow);
+}
+.in-workspace :is(.organizer-header, .tournament-header) {
+  background: var(--mockup-navy);
+  color: #fff;
+}
+.in-workspace .cockpit-header { padding: 24px; }
+.in-workspace :is(.organizer-section, .cockpit-section) .section-head h1 {
+  font: 800 clamp(1.7rem, 3vw, 2.5rem)/1.15 var(--ed-font-display);
+  color: var(--mockup-ink);
+}
+/* Native form controls retain their semantics and visible disabled state. */
+.app-shell :is(input[type='checkbox'], input[type='radio']) { accent-color: #087b8c; }
+.app-shell :is(input, select, textarea):disabled { opacity: .7; cursor: not-allowed; }
+@media (max-width: 640px) { .in-workspace .cockpit-header { padding: 18px; } }
+
+/* Composition shared by the 50 supplied references. Keep real page content in
+   normal flow; the waves are a decorative, responsive background asset. */
+.app-shell {
+  --mockup-control: 48px;
+  --ds-turquoise: #08d6ce;
+  --hm-cyan: #08d6ce;
+  --hm-navy: #081f46;
+  --hm-card: #ffffffa8;
+  --ed-font-display: 'Plus Jakarta Sans', 'Space Grotesk', system-ui, sans-serif;
+}
+.app-shell.is-island .ed-main {
+  --ed-accent: #08d6ce;
+  --ed-radius: 20px;
+  --ed-surface: #ffffffb8;
+  background: #c7f3fc url('/assets/lagoon-waves.svg') center top / 100% 100% no-repeat;
+}
+.app-shell.is-island .ed-topbar { background: #081f46; min-height: 64px; }
+.app-shell.is-island .ed-topnav a.active { background: #08d6ce; }
+.app-shell.is-island .ed-main .ed-btn-primary { background: #08d6ce; }
+.app-shell.is-island .ed-main .ip-banner {
+  min-height: clamp(160px, 16vw, 208px);
+  border-radius: 18px;
+  margin-top: 0;
+}
+.app-shell.is-island .ip-banner-photo { width: 100%; max-width: none; object-position: center; }
+.app-shell.is-island .ip-banner-backdrop { filter: none; }
+.app-shell.is-island .ip-banner-copy { padding: 26px 32px; }
+.app-shell.is-island .ip-banner h1 { font-size: clamp(2.5rem, 4.3vw, 3.6rem); }
+.app-shell.is-island .public-directory { padding-top: 14px; padding-bottom: 24px; }
+.app-shell.is-island .public-directory > .ed-filterbar {
+  display: flex; flex-wrap: wrap; align-items: end; gap: 16px;
+  padding: 0; margin-block: 22px;
+  background: transparent; border: 0; box-shadow: none;
+}
+.app-shell.is-island .public-directory .ed-filterbar > label { flex: 1 1 180px; min-width: 0; color: #17384f; font-weight: 600; }
+.app-shell.is-island .public-directory .ed-filterbar > .ed-search-field {
+  flex: 1 0 100%; min-height: 54px; padding-inline: 18px;
+  border-radius: 24px; background: #ffffffb5; border: 1px solid #ffffff;
+  box-shadow: 0 2px 4px #0b254015;
+}
+.app-shell.is-island .public-directory .ed-search-field input { min-height: 50px; font-size: 1.05rem; }
+.app-shell.is-island .public-directory > .ed-search-lg { min-height: 54px; border-radius: 24px; background: #ffffffb5; border-color: #fff; }
+.app-shell.is-island .public-directory .ed-count { font-size: 1.25rem; font-weight: 800; margin-block: 22px 16px; }
+.app-shell.is-island .ic-grid { gap: 22px; }
+.app-shell.is-island .ic-card {
+  background: #ffffffa8; border: 1.5px solid #ffffff;
+  border-radius: 20px; box-shadow: 0 3px 5px #039ba31a;
+}
+.app-shell.is-island .ic-card .ic-cover { height: 138px; }
+.app-shell.is-island .ic-card .ic-name { font-size: clamp(1.2rem, 1.9vw, 1.6rem); line-height: 1.2; overflow-wrap: anywhere; }
+.app-shell.is-island .ic-card .ic-primary { background: #08d6ce; color: #081f46; min-height: 44px; }
+.app-shell.is-island .ic-card .ic-actions { margin-top: auto; padding-top: 16px; }
+.ic-organization { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ic-org-mark { position: relative; display: grid; place-items: center; width: 88px; height: 88px; margin-top: -52px; margin-bottom: 14px; color: #087f89; border: 3px solid #fff; border-radius: 24px; background: #dbfbfa; box-shadow: 0 3px 10px #0b25401a; }
+.ic-description { margin: 12px 20px 0; color: #405b70; line-height: 1.5; font-size: .9375rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ic-organization .ic-actions { align-self: stretch; grid-template-columns: minmax(0, 1fr); }
+.app-shell.is-island .ip-cta {
+  grid-template-columns: minmax(0, 1fr) auto; align-items: center; text-align: start;
+  border-radius: 22px; padding: 24px 36px; margin-top: 32px;
+  background: radial-gradient(ellipse at 0 140%, #05c6cd80, transparent 45%), radial-gradient(ellipse at 100% 140%, #05c6cd80, transparent 45%), #081f46;
+}
+.app-shell.is-island .ip-cta h2 { justify-self: start; }
+.pd-pager { display: flex; flex-direction: column-reverse; justify-content: center; gap: 10px; border: 0; background: none; text-align: center; margin-block: 28px; }
+.pd-pager .ip-pager { margin: 0; }
+.pd-page-summary { color: #405b70; font-size: .875rem; }
+
+/* Sign-in, sign-up, recovery and verification use the reference's full-screen
+   split layout while preserving the existing authentication flow. */
+.app-shell .auth-backdrop { padding: 0; background: #c7f3fc; z-index: 200; overflow: auto; align-items: stretch; }
+.auth-screen { display: flex; flex-direction: column; width: 100%; min-height: 100dvh; background: #c7f3fc url('/assets/lagoon-waves.svg') center / cover; color: #0a1f44; }
+.auth-screen-header, .auth-screen-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px clamp(20px, 4vw, 56px); color: #fff; background: #081f46; }
+.auth-screen-header .brand-word { font-size: clamp(1.1rem, 2vw, 1.7rem); }
+.auth-screen-header .ed-btn-ghost { color: #fff; border-color: #ffffffad; border-radius: 999px; background: transparent; }
+.auth-screen .auth-modal { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); flex: 1; width: 100%; overflow: visible; padding: 0; margin: 0; border: 0; border-radius: 0; background: transparent; }
+.auth-screen .auth-photo { display: flex; flex-direction: column; justify-content: flex-end; min-height: 640px; padding: 52px 48px; background: #12234f; }
+.auth-screen .auth-photo img { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.auth-screen .auth-photo::after { background: linear-gradient(180deg, #091c3b08 20%, #091c3b45 55%, #091c3be8 100%); }
+.auth-screen .auth-photo-title { margin: 0; font-size: clamp(2rem, 3.3vw, 3.2rem); max-width: 15ch; }
+.auth-screen .auth-photo-text { margin: 18px 0 0; max-width: 34ch; font-size: 1.2rem; }
+.auth-screen .auth-form-col { align-self: center; width: 100%; max-width: 560px; max-height: none; overflow: visible; margin-inline: auto; padding: 48px 44px; }
+.auth-screen .modal-brand { justify-items: center; margin-bottom: 24px; }
+.auth-screen .modal-brand .brand-word { color: #0a1f44; font-size: 1.6rem; }
+.auth-screen .modal-brand small { color: #405b70; letter-spacing: .03em; }
+.auth-screen .auth-form-col h2 { font-size: clamp(1.8rem, 2.7vw, 2.5rem); margin: 0 0 12px; text-align: center; }
+.auth-screen .auth-form-col > p { text-align: center; }
+.auth-screen .auth-form-col form { display: grid; gap: 18px; }
+.auth-screen .auth-form-col label { display: grid; gap: 8px; font-size: 1rem; font-weight: 600; color: #0a1f44; }
+.auth-screen .auth-form-col input { width: 100%; min-height: 50px; border: 1px solid #90bac8; background: #ffffffdb; border-radius: 12px; color: #0a1f44; }
+.auth-screen .auth-form-col .auth-agree { display: flex; align-items: flex-start; font-size: .875rem; font-weight: 500; }
+.auth-screen .auth-agree input { width: 18px; min-height: 18px; flex: none; margin-top: 4px; }
+.auth-screen .auth-form-col .px-password { display: flex; align-items: center; }
+.auth-screen .auth-form-col .px-password input { padding-inline-end: 72px; }
+.auth-screen .auth-form-col .px-password button { margin-inline-start: -68px; min-width: 64px; position: relative; }
+.auth-screen .primary-button.full { min-height: 52px; width: 100%; background: #08d6ce; color: #081f46; border-radius: 12px; font-size: 1.1rem; }
+.auth-screen .switch-auth { display: block; width: fit-content; margin: 18px auto 0; color: #076f7a; font-weight: 600; }
+.auth-screen .modal-close { position: absolute; top: 8px; right: 12px; color: #0a1f44; background: #ffffffa8; border: 1px solid #fff; border-radius: 50%; }
+.auth-screen-footer { flex-wrap: wrap; padding-block: 18px; }
+.auth-screen-footer nav { display: flex; gap: 28px; margin-inline-end: auto; }
+.auth-screen-footer a { color: #fff; text-decoration: none; }
+.auth-screen-footer > span { color: #c5d9ed; font-size: .875rem; }
+.auth-screen .auth-verify { text-align: center; background: #ffffff8c; border: 1px solid white; border-radius: 20px; padding: 24px; }
+.app-shell .auth-screen .auth-screen-header .ed-btn-ghost { color: #fff; border-color: #ffffffad; }
+.auth-screen .auth-screen-footer { display: flex; background: #081f46; width: 100%; max-width: none; margin: 0; }
+
+/* Registration, review and application states reuse the actual form rather
+   than an image or a second submission implementation. */
+.registration-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-block: 4px 20px; font-size: .9375rem; }
+.registration-breadcrumb a { color: #087781; }
+.registration-hero { position: relative; isolation: isolate; overflow: hidden; border-radius: 20px; color: #fff; background: #081f46; }
+.registration-hero > .tournament-cover { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+.registration-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #081f46e8, #081f4630); }
+.registration-hero-content { display: flex; align-items: center; gap: 24px; min-height: 170px; padding: 28px 32px; }
+.registration-hero-content p { margin: 0 0 4px; font-weight: 600; color: #c3f8f8; }
+.registration-hero-content h1 { margin: 0 0 8px; font-size: clamp(1.7rem, 3vw, 2.65rem); line-height: 1.15; color: #fff; }
+.registration-logo { flex: none; width: 90px; height: 96px; border-radius: 18px; }
+.registration-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 24px; margin-block: 24px 36px; align-items: start; }
+.registration-main, .registration-sidebar { display: grid; gap: 18px; min-width: 0; }
+.app-shell .registration-layout .ed-panel { padding: 24px; margin: 0; }
+.registration-sidebar h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; font-size: 1.25rem; }
+.registration-facts { display: grid; gap: 14px; margin: 0 0 24px; }
+.registration-facts div { padding-bottom: 12px; border-bottom: 1px solid #8ebac94d; }
+.registration-facts dt { display: flex; align-items: center; gap: 6px; color: #405b70; font-size: .875rem; }
+.registration-facts dd { margin: 5px 0 0; font-weight: 700; }
+.registration-checklist { padding-inline-start: 22px; margin: 0; display: grid; gap: 12px; color: #17384f; }
+.registration-private { display: flex; align-items: flex-start; gap: 10px; color: #405b70; font-size: .875rem; }
+.registration-private svg { flex: none; margin-top: 4px; }
+.app-shell .registration-form-panel .application-panel { padding: 0; margin: 0; border: 0; box-shadow: none; background: transparent; color: #0b2540; }
+.app-shell .application-panel h4 { margin: 0 0 12px; font-size: 1.5rem; color: #0b2540; }
+.app-shell .application-panel > label { display: grid; gap: 8px; margin-top: 18px; font-size: .9375rem; font-weight: 600; color: #17384f; }
+.app-shell .application-panel :is(input:not([type='checkbox']), select, textarea) { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid #91b7c5; border-radius: 10px; background: #ffffffde; color: #0b2540; }
+.app-shell .application-panel .button-row { border-top: 1px solid #8ebac94d; padding-top: 22px; margin-top: 24px; justify-content: flex-end; }
+.registration-form-steps { list-style: none; display: flex; gap: 20px; padding: 0 0 20px; margin: 0 0 24px; border-bottom: 1px solid #8ebac94d; }
+.registration-form-steps li { display: flex; align-items: center; gap: 10px; color: #405b70; font-size: .9375rem; }
+.registration-form-steps li > span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1px solid #91b7c5; }
+.registration-form-steps .active { font-weight: 800; color: #0b2540; }
+.registration-form-steps :is(.active, .done) > span { background: #08d6ce; border-color: #08d6ce; color: #081f46; }
+.registration-review { border: 1px solid #fff; background: #ffffff88; border-radius: 16px; padding: 20px; }
+.registration-review h3 { display: flex; align-items: center; gap: 10px; margin-top: 0; }
+.registration-review dl { display: grid; gap: 14px; }
+.registration-review dl > div { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(0, 1.5fr); gap: 20px; border-bottom: 1px solid #91b7c54d; padding-bottom: 12px; }
+.registration-review dt { font-size: .9375rem; color: #405b70; }
+.registration-review dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; white-space: pre-wrap; }
+.registration-review > p { margin-bottom: 0; color: #405b70; font-size: .875rem; }
+
+/* News uses the reference's wide feature followed by a three-column grid. */
+.app-shell.is-island .pd-news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-block: 24px; }
+.app-shell.is-island .pd-news-grid .ed-news-item { display: flex; flex-direction: column; padding: 0; overflow: hidden; border: 1.5px solid #fff; border-radius: 20px; background: #ffffffb5; color: #0b2540; box-shadow: var(--mockup-shadow); }
+.pd-news-image { display: block; height: 168px; overflow: hidden; background: #0a1f44; }
+.pd-news-image img, .pd-news-image .lp-cover-art { position: static; display: block; width: 100%; height: 100%; object-fit: cover; }
+.pd-news-copy { display: flex; flex-direction: column; gap: 14px; padding: 22px; flex: 1; }
+.app-shell.is-island .pd-news-copy > small { font-size: .75rem; color: #087781; line-height: 1.5; letter-spacing: .04em; }
+.app-shell.is-island .pd-news-copy > strong { font-size: 1.25rem; line-height: 1.35; }
+.app-shell.is-island .pd-news-copy > span { color: #405b70; }
+.app-shell.is-island .pd-news-copy .pd-news-read { display: flex; align-items: center; gap: 8px; margin-top: auto; color: #087781; font-weight: 700; }
+.app-shell.is-island .pd-news-grid .ed-news-item.lead { grid-column: 1 / -1; grid-row: auto; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); min-height: 280px; }
+.pd-news-grid .ed-news-item.lead .pd-news-image { height: 100%; min-height: 280px; }
+.pd-news-grid .ed-news-item.lead .pd-news-copy { padding: 32px; }
+.app-shell.is-island .pd-news-grid .ed-news-item.lead strong { font-size: clamp(1.5rem, 2.5vw, 2.1rem); }
+.public-article-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 26px; align-items: start; }
+.app-shell.is-island .public-article-layout .ed-article { max-width: none; width: 100%; margin: 0; padding: 28px; border: 1.5px solid #fff; border-radius: 20px; background: #ffffffb5; box-shadow: var(--mockup-shadow); }
+.public-article-sidebar { display: grid; gap: 20px; }
+.public-article-sidebar .ed-panel { margin: 0; padding: 24px; }
+.public-article-sidebar .px-related { margin: 0; }
+.public-article-layout .ed-article h1 { font-size: clamp(1.8rem, 3vw, 2.7rem); }
+.public-article-layout .ed-article-cover { width: 100%; border-radius: 14px; }
+
+.review-dialog-backdrop { position: fixed; inset: 0; z-index: 210; display: grid; place-items: center; overflow-y: auto; padding: 24px; background: #081f4675; backdrop-filter: blur(6px); }
+.review-dialog { width: min(580px, 100%); max-height: calc(100dvh - 48px); overflow-y: auto; padding: 28px; border: 1.5px solid #fff; border-radius: 24px; background: #edfbff; color: #0a1f44; box-shadow: 0 24px 80px #081f464d; }
+.review-dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.review-dialog-heading h2 { margin: 0; font-size: 1.7rem; line-height: 1.25; }
+.review-dialog-heading .ed-icon-btn { flex: none; color: #0a1f44; }
+.review-dialog-record { display: flex; gap: 16px; align-items: center; padding: 16px; border-radius: 16px; background: #fff; border: 1px solid #c0dbe5; }
+.review-dialog-record > span { display: grid; gap: 4px; }
+.review-dialog-record small { color: #405b70; }
+.review-dialog-note { display: flex; align-items: flex-start; gap: 10px; padding: 16px; background: #d7f7f1; border-radius: 12px; color: #17534e; font-size: .9375rem; }
+.review-dialog-note svg { flex: none; margin-top: 4px; }
+.review-dialog .sq-fields { margin-top: 20px; }
+.review-dialog .sq-fields :is(input, textarea) { width: 100%; border: 1px solid #91b7c5; border-radius: 10px; background: #fff; color: #0a1f44; min-height: 46px; padding: 12px; }
+.review-dialog .sq-fields textarea { min-height: 88px; resize: vertical; }
+.review-dialog .review-dialog-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; margin-top: 24px; padding: 20px 0 0; border: 0; border-top: 1px solid #bdd6e0; background: none; }
+.review-dialog .ed-btn-ghost { background: #fff; color: #0a1f44; border-color: #91b7c5; }
+.person-profile-hero { position: relative; }
+.app-shell.is-island .person-profile-hero .ip-banner { min-height: 160px; }
+.app-shell.is-island .person-profile-hero .ip-banner-copy { padding-inline-start: 150px; padding-inline-end: 180px; }
+.app-shell.is-island .person-profile-hero .ip-banner h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+.person-profile-avatar { position: absolute; inset-inline-start: 26px; top: 30px; width: 100px; height: 100px; border: 3px solid #fff; border-radius: 20px; background: #d8e0e4; overflow: hidden; }
+.person-profile-avatar .lp-avatar { width: 100%; height: 100%; }
+.person-profile-share { position: absolute; bottom: 22px; inset-inline-end: 24px; }
+.app-shell .person-profile-share .ed-btn { color: #fff; border-color: #ffffffad; background: #081f4680; }
+.person-profile-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; margin-block: 20px; align-items: start; }
+.person-profile-main, .person-profile-side { min-width: 0; }
+.person-profile-grid .person-about { margin: 0 0 20px; }
+.person-profile-grid .person-about h2 { margin-top: 0; font-size: 1.35rem; }
+.person-profile-grid .pd-explore { grid-template-columns: minmax(0, 1fr); }
+
+@media (max-width: 900px) {
+  .app-shell.is-island .ic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .auth-screen .auth-photo { min-height: 560px; padding: 32px; }
+  .auth-screen .auth-form-col { padding: 40px 24px; }
+  .app-shell.is-island .pd-news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .person-profile-grid { grid-template-columns: minmax(0, 1fr); }
+  .app-shell.is-island .person-profile-hero .ip-banner-copy { padding: 124px 24px 78px; }
+  .person-profile-avatar { top: 20px; inset-inline-start: 24px; width: 88px; height: 88px; }
+  .person-profile-share { inset-inline-start: 24px; inset-inline-end: auto; bottom: 20px; }
+  .app-shell.is-island .ic-grid { grid-template-columns: minmax(0, 1fr); }
+  .app-shell.is-island .ip-banner-copy { padding: 24px; }
+  .app-shell.is-island .ip-banner h1 { font-size: 2.25rem; }
+  .app-shell.is-island .ip-cta { grid-template-columns: minmax(0, 1fr); padding: 24px; }
+  .app-shell.is-island .public-directory .ed-filterbar > label { flex-basis: calc(50% - 8px); }
+  .auth-screen .auth-modal { grid-template-columns: minmax(0, 1fr); }
+  .auth-screen .auth-photo { display: none; }
+  .auth-screen-header { padding: 14px 16px; gap: 12px; }
+  .auth-screen-header .ed-btn { padding-inline: 10px; font-size: .8125rem; }
+  .auth-screen .auth-form-col { padding: 48px 24px; }
+  .auth-screen-footer { gap: 16px; padding: 20px 24px; }
+  .auth-screen-footer .brand { width: 100%; }
+  .registration-layout { grid-template-columns: minmax(0, 1fr); }
+  .registration-hero-content { padding: 22px; gap: 16px; }
+  .registration-logo { width: 64px; height: 72px; }
+  .app-shell .registration-layout .ed-panel { padding: 20px; }
+  .registration-form-steps { gap: 14px; }
+  .registration-form-steps li { font-size: .8125rem; }
+  .registration-review dl > div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .app-shell.is-island .pd-news-grid { grid-template-columns: minmax(0, 1fr); }
+  .app-shell.is-island .pd-news-grid .ed-news-item.lead { grid-template-columns: minmax(0, 1fr); }
+  .pd-news-grid .ed-news-item.lead .pd-news-image { min-height: 0; height: 200px; }
+  .pd-news-grid .ed-news-item.lead .pd-news-copy { padding: 22px; }
+  .public-article-layout { grid-template-columns: minmax(0, 1fr); }
+  .app-shell.is-island .public-article-layout .ed-article { padding: 22px; }
+}

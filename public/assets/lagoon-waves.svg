@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" fill="none">
+  <defs>
+    <linearGradient id="sea" x1="950" y1="0" x2="450" y2="1100" gradientUnits="userSpaceOnUse"><stop stop-color="#e9fcff"/><stop offset=".45" stop-color="#b3effb"/><stop offset="1" stop-color="#caf7fc"/></linearGradient>
+    <linearGradient id="foam" x1="0" y1="0" x2="1600" y2="700" gradientUnits="userSpaceOnUse"><stop stop-color="white" stop-opacity=".6"/><stop offset=".5" stop-color="white" stop-opacity=".08"/><stop offset="1" stop-color="white" stop-opacity=".45"/></linearGradient>
+  </defs>
+  <path fill="url(#sea)" d="M0 0h1600v1100H0z"/>
+  <path fill="url(#foam)" d="M0 68C210 142 235-38 445 28c302 96 354 160 625 78 255-77 353 23 530-98v73c-170 89-324-21-548 74C752 283 530 65 378 75 220 85 115 172 0 102V68Z"/>
+  <path stroke="white" stroke-opacity=".45" stroke-width="3" d="M-40 101C123 179 234-15 437 48c306 94 362 176 620 95 292-92 365 27 587-96"/>
+  <path fill="url(#foam)" d="M0 739c247 276 468-5 740 134 279 142 466-126 860-257v60c-387 146-579 380-866 238C445 773 273 1081 0 791v-52Z"/>
+  <path stroke="white" stroke-opacity=".4" stroke-width="2" d="M-45 843c318 245 492-52 773 88 308 153 513-122 920-185"/>
+</svg>

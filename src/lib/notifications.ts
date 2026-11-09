@@ -1,0 +1,7 @@
+import type { SupabaseClient } from '@supabase/supabase-js'
+
+export type NotificationChannel = 'in_app' | 'email'
+export type NotificationState = 'queued' | 'read' | 'sent' | 'failed'
+export function nextDeliveryState(channel: NotificationChannel, providerAvailable: boolean): NotificationState { return channel === 'in_app' ? 'queued' : providerAvailable ? 'queued' : 'queued' }
+export async function createNotification(client: SupabaseClient, recipientId: string, createdBy: string, title: string, body: string, channel: NotificationChannel, tournamentId?: string) { const notification = await client.from('notifications').insert({ recipient_id: recipientId, created_by: createdBy, title: title.trim(), body: body.trim(), notification_type: 'operations', channel, tournament_id: tournamentId ?? null, state: 'queued' }).select('id').single(); if (notification.error || !notification.data) return { data: null, error: notification.error?.message ?? 'Notification could not be created.' }; const delivery = await client.from('notification_deliveries').insert({ notification_id: notification.data.id, channel, state: 'queued' }); return { data: notification.data, error: delivery.error?.message ?? null } }
+export async function markNotificationRead(client: SupabaseClient, notificationId: string) { const result = await client.from('notifications').update({ state: 'read', read_at: new Date().toISOString() }).eq('id', notificationId); return { error: result.error?.message ?? null } }
