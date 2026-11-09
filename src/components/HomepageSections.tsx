@@ -388,7 +388,7 @@ export function TournamentTile({ record, detail, capacity, full = false }: { rec
   return <a className={`lp-dcard${full ? ' lp-dcard-full' : ''}`} href={tournamentHref(record)}>
     <span className="lp-dcard-cover"><CoverScene sport={sport} /><TournamentCover client={publicSupabase} path={branding.coverPath} name={name} sport={sportClass(sport).replace('sport-', '')} /></span>
     <span className="lp-dcard-body">
-      <span className="lp-dcard-badge"><TournamentLogo client={publicSupabase} path={branding.logoPath} name={name} className="lp-dcard-logo" fallback={<TournamentEmblem />} /></span>
+      <span className="lp-dcard-badge"><TournamentLogo client={publicSupabase} path={branding.logoPath} name={name} className="lp-dcard-logo" /></span>
       <span className="lp-dcard-title"><strong>{name}</strong><small>{[sportName(sport), detail?.island].filter(Boolean).join(' · ')}</small></span>
       <span className="lp-dcard-foot">
         <span className="lp-dcard-facts">

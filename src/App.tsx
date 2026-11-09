@@ -100,6 +100,7 @@ const [darkMode, setDarkMode] = useState(() => { try { return localStorage.getIt
   useEffect(() => { const onHashChange = () => { const route = parsePublicHash(window.location.hash); setPublicRoute(route); setMoreOpen(false); setAccountOpen(false); if (!['workspace', 'admin', 'registration'].includes(route.kind)) { rememberView(window.location.hash); recordEngagement() } }; window.addEventListener('hashchange', onHashChange); return () => window.removeEventListener('hashchange', onHashChange) }, [])
   useEffect(() => { saveLanguagePreference(language); document.documentElement.lang = language; document.documentElement.dir = isRtl(language) ? 'rtl' : 'ltr' }, [language])
   useEffect(() => { try { localStorage.setItem('kulhivaru.dark', darkMode ? '1' : '0') } catch { /* ignore */ }; document.documentElement.classList.toggle('dark', darkMode) }, [darkMode])
+  useEffect(() => { if (!notice) return; const id = window.setTimeout(() => setNotice(''), 4000); return () => window.clearTimeout(id) }, [notice])
   // Pages that do not name themselves get a title from their route, so the
   // browser tab never keeps the previous page's title. Pages that set their own
   // title (matches, news, search, standings, info...) are left alone.

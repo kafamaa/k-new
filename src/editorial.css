@@ -327,7 +327,7 @@ body { background: var(--ed-paper); color: var(--ed-text); font-family: var(--ed
 
 /* ---------- Detail pages: wide cover, identity, sticky tabs ---------- */
 .ed-detail { padding-bottom: var(--s8); }
-.ed-cover { position: relative; isolation: isolate; min-height: clamp(120px, 18vh, 180px); display: grid; align-items: end; color: #fff; overflow: hidden; background: var(--ed-ink); }
+.ed-cover { position: relative; isolation: isolate; min-height: clamp(120px, 18vh, 180px); display: grid; align-items: end; color: #fff; overflow: visible; background: var(--ed-ink); }
 /* Dark mode basics */
 html.dark body { background: #0B1F33; color: #EAF9FD; }
 html.dark .ed-panel, html.dark .ed-card, html.dark .ic-card { background: rgba(8,42,64,.6); border-color: rgba(0,207,232,.2); color: #EAF9FD; }

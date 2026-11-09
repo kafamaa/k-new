@@ -599,7 +599,7 @@ function TournamentPublicDetail({ data, autoOpenApply = false }: { data: { tourn
       <div className="ed-cover-inner">
         <Back href="#tournaments" label="All tournaments" />
         <div className="ed-identity">
-          <TournamentLogo client={publicSupabase} path={branding.logoPath} name={tournamentName} className="ed-identity-logo" fallback={<TournamentEmblem />} />
+          <TournamentLogo client={publicSupabase} path={branding.logoPath} name={tournamentName} className="ed-identity-logo" />
           <div>
             <p className="ed-eyebrow light">{sportName(tournament.sport)}{detail?.organizerName ? ` · ${detail.organizerName}` : ''}</p>
             <h1>{tournamentName}</h1>

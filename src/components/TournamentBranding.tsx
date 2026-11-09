@@ -12,22 +12,22 @@ type BrandingState = 'empty' | 'loading' | 'ready' | 'error'
 
 function useBrandingImage(client: SupabaseClient | null, path: string | null | undefined) {
   const [resolved, setResolved] = useState<{ path: string; url: string | null } | null>(null)
-  const [failedUrl, setFailedUrl] = useState<string | null>(null)
+  const [retry, setRetry] = useState(0)
   const [loadedUrl, setLoadedUrl] = useState<string | null>(null)
   useEffect(() => {
     if (!client || !path) return
     let active = true
     void resolveBrandingUrl(client, path).then(url => { if (active) setResolved({ path, url }) })
     return () => { active = false }
-  }, [client, path])
+  }, [client, path, retry])
   const url = resolved && resolved.path === path ? resolved.url : null
   const state: BrandingState = !client || !path ? 'empty'
     : !resolved || resolved.path !== path ? 'loading'
-    : !url || failedUrl === url ? 'error'
+    : !url ? 'error'
     : loadedUrl === url ? 'ready' : 'loading'
-  const onError = () => { if (url) { setFailedUrl(url); forgetBrandingUrl(client, path) } }
+  const onError = () => { if (url) { forgetBrandingUrl(client, path); setResolved(null); setRetry(r => r + 1) } }
   const onLoad = () => { if (url) setLoadedUrl(url) }
-  return { url: url && failedUrl !== url ? url : null, state, onError, onLoad }
+  return { url, state, onError, onLoad }
 }
 
 function brandingMonogram(name: string): string {
@@ -37,8 +37,7 @@ function brandingMonogram(name: string): string {
 export function TournamentLogo({ client, path, name, className = '', fallback }: { client: SupabaseClient | null; path: string | null | undefined; name: string; className?: string; fallback?: ReactNode }) {
   const image = useBrandingImage(client, path)
   return <span className={`tournament-logo ${className}`.trim()} data-state={image.state}>
-    <span className="tournament-logo-fallback" aria-hidden="true">{fallback ?? brandingMonogram(name)}</span>
-    {image.url ? <img src={image.url} alt={`${name} logo`} loading="lazy" decoding="async" onLoad={image.onLoad} onError={image.onError} /> : null}
+    {image.url ? <img src={image.url} alt={`${name} logo`} loading="eager" decoding="async" onLoad={image.onLoad} onError={image.onError} /> : <span className="tournament-logo-fallback" aria-hidden="true">{fallback ?? brandingMonogram(name)}</span>}
   </span>
 }
 
