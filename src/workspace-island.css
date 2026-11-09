@@ -233,6 +233,16 @@
 .in-workspace .ws-choice-platform_admin .ws-choice-icon { background: #c8f2f6; color: #0a7c8c; }
 .in-workspace .ws-workspace { border-radius: 14px; background: rgba(255, 255, 255, .6); }
 .in-workspace .ws-workspace-mark { background: var(--wsx-navy-2); }
+.ws-welcome-banner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; margin-bottom: 18px; border-radius: 18px; background: linear-gradient(135deg, #041827 0%, #082A40 50%, #0A6679 100%); color: #fff; box-shadow: 0 12px 34px rgba(4,24,39,.25); }
+.ws-welcome-banner .ed-eyebrow { color: var(--turquoise, #00CFE8); margin: 0 0 4px; }
+.ws-welcome-title { font: 700 24px 'Space Grotesk', sans-serif; margin: 0 0 4px; color: #fff; }
+.ws-welcome-sub { font-size: 13px; color: #C7EAF3; margin: 0; }
+.ws-welcome-icon { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: rgba(0,207,232,.18); color: #7DE8F4; flex: none; }
+.ws-choice-player .ws-choice-icon { background: rgba(0,207,232,.18); color: #00CFE8; }
+.ws-choice-team .ws-choice-icon { background: rgba(16,185,129,.18); color: #10B981; }
+.ws-choice-organization .ws-choice-icon { background: rgba(245,183,46,.18); color: #F5B72E; }
+.ws-choice-official .ws-choice-icon { background: rgba(139,92,246,.18); color: #8B5CF6; }
+.ws-choice-platform_admin .ws-choice-icon { background: rgba(255,59,77,.18); color: #FF3B4D; }
 
 /* Organizer's own header joins the navy bar. */
 .in-workspace .organizer-header { background: var(--wsx-navy); }

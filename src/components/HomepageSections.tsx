@@ -10,7 +10,7 @@ import { activeTeams, completedTournaments, countPublished, daysUntil, formatMvt
 import { TournamentCover, TournamentLogo } from './TournamentBranding'
 import { Chip } from './Editorial'
 import { FinalCallToAction } from './LandingFeatures'
-import { CoverScene, HERO_PHOTO, HERO_WIDE, PersonAvatar, TeamLogo, SportGlyph, TournamentEmblem } from './HomeArt'
+import { CoverScene, HERO_PHOTO, HERO_WIDE, PersonAvatar, TeamLogo, SportGlyph } from './HomeArt'
 import { HIGHLIGHT_KIND_LABELS, loadLiveHighlights, type Highlight } from '../lib/platformHighlights'
 import { DEFAULT_LANDING, featureOn, SPORT_KEYS_ALL, type FeatureFlag } from '../lib/appConfig'
 import { useAppConfig } from '../lib/useAppConfig'

@@ -17,13 +17,13 @@ import { createClaimInvitation } from './records'
 type Row = Record<string, unknown>
 const text = (value: unknown) => (typeof value === 'string' && value.trim() ? value : null)
 
-export type ManagedPlayer = { id: string; name: string; slug: string; island: string | null; claimed: boolean; published: boolean; createdAt: string }
+export type ManagedPlayer = { id: string; name: string; slug: string; island: string | null; claimed: boolean; published: boolean; photoUrl?: string | null; createdAt: string }
 export type ManagedTeam = { id: string; name: string; slug: string; island: string | null; published: boolean }
 
 export async function loadManagedPlayers(client: SupabaseClient, userId: string): Promise<{ data: ManagedPlayer[]; error: string | null }> {
-  const result = await client.from('player_profiles').select('id,display_name,slug,island,is_claimed,is_published,created_at').eq('created_by', userId).order('created_at', { ascending: false }).limit(500)
+  const result = await client.from('player_profiles').select('id,display_name,slug,island,is_claimed,is_published,photo_url,created_at').eq('created_by', userId).order('created_at', { ascending: false }).limit(500)
   if (result.error) return { data: [], error: 'Your player records could not be loaded. Please try again.' }
-  return { data: ((result.data ?? []) as Row[]).map(row => ({ id: String(row.id), name: String(row.display_name ?? ''), slug: String(row.slug ?? ''), island: text(row.island), claimed: row.is_claimed === true, published: row.is_published === true, createdAt: String(row.created_at ?? '') })), error: null }
+  return { data: ((result.data ?? []) as Row[]).map(row => ({ id: String(row.id), name: String(row.display_name ?? ''), slug: String(row.slug ?? ''), island: text(row.island), claimed: row.is_claimed === true, published: row.is_published === true, photoUrl: text(row.photo_url), createdAt: String(row.created_at ?? '') })), error: null }
 }
 
 export async function loadOrganizationTeams(client: SupabaseClient, organizationId: string): Promise<{ data: ManagedTeam[]; error: string | null }> {

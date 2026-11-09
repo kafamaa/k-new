@@ -17,11 +17,11 @@ const KIND_BLURB: Record<WorkspaceKind, string> = {
   official: 'Match-center tools for matches an organizer assigned you.',
   platform_admin: 'Manage the complete Kulhivaru+ platform',
 }
-const DISPLAY_ORDER: WorkspaceKind[] = ['player', 'team', 'organization', 'official']
+const DISPLAY_ORDER: WorkspaceKind[] = ['player', 'team', 'organization', 'official', 'platform_admin']
 // My Work (owner, 2026-11-02): the five kinds of work, in this order, under these names.
 const MY_WORK_LABELS: Record<WorkspaceKind, string> = { player: 'Player Career', team: 'Managed Teams', organization: 'Organizations', official: 'Official Assignments', platform_admin: 'Platform Administration' }
 // Matches an organizer assigned: never self-created.
-const ASSIGNMENT_KINDS: WorkspaceKind[] = ['official']
+const ASSIGNMENT_KINDS: WorkspaceKind[] = ['official', 'platform_admin']
 
 function onboardingError(error: string, choice: CreateKind | null): string {
   if (choice === 'player' && (error.includes('player_profiles') || error.includes('row-level security'))) return 'Personal player creation was denied by the connected Supabase RLS policy. This requires an authorized policy/schema inspection; do not manually edit the database or bypass RLS.'
@@ -117,7 +117,12 @@ export function WorkspaceChooser({ client, user, workspaces, onSelect, onComplet
   const togglePin = (workspace: Workspace) => { const key = workspaceKey(workspace); const next = pinned.includes(key) ? pinned.filter(item => item !== key) : [key, ...pinned]; setPinned(next); writeList(PINNED_KEY, next) }
   const byKey = new Map(workspaces.map(workspace => [workspaceKey(workspace), workspace]))
   const quick = [...new Set([...pinned, ...recent])].map(key => byKey.get(key)).filter((workspace): workspace is Workspace => Boolean(workspace)).slice(0, 6)
+  const userName = String(user.user_metadata?.full_name ?? user.email ?? 'there').split(' ')[0]
   return <div className="ws-chooser">
+    <div className="ws-welcome-banner">
+      <div><p className="ed-eyebrow">WELCOME BACK</p><h2 className="ws-welcome-title">Hi {userName}</h2><p className="ws-welcome-sub">You have {workspaces.length} authorized workspace{workspaces.length === 1 ? '' : 's'}. Pick one to continue, or create a new role below.</p></div>
+      <span className="ws-welcome-icon" aria-hidden="true"><ShieldCheck size={32} /></span>
+    </div>
     {quick.length > 0 && workspaces.length > 1 && <section className="ws-quick" aria-label="Pinned and recent workspaces">
       <h2 className="ed-subhead">Pinned and recent</h2>
       <ul className="ws-quick-list">{quick.map(workspace => { const key = workspaceKey(workspace); const isPinned = pinned.includes(key); return <li key={key}>

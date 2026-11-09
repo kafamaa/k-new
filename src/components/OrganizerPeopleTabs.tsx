@@ -98,7 +98,7 @@ export function ClaimsSection({ client, user, onNotice }: { client: SupabaseClie
             const pending = invitations.find(item => item.playerId === player.id && item.state === 'pending')
             return <li key={player.id} className="result-row">
               {invitable.has(player.id) ? <input type="checkbox" aria-label={`Select ${player.name}`} checked={selected.has(player.id)} onChange={() => toggle(player.id)} /> : <span aria-hidden="true" className="claim-check-spacer" />}
-              <div><strong>{player.name}</strong><span>{player.island ?? 'Island not recorded'}{player.published ? ' · Published' : ' · Private'}{pending ? ` · expires ${dateLabel(pending.expiresAt)}` : ''}</span></div>
+              <div className="player-row-identity">{player.photoUrl ? <img className="player-row-avatar" src={player.photoUrl} alt="" /> : <span className="player-row-avatar player-row-avatar-fallback">{player.name.trim().slice(0, 2).toUpperCase()}</span>}<div><strong>{player.name}</strong><span>{player.island ?? 'Island not recorded'}{player.published ? ' · Published' : ' · Private'}{pending ? ` · expires ${dateLabel(pending.expiresAt)}` : ''}</span></div></div>
               <span className={`status-pill status-${STATUS_TONE[status]}`}>{CLAIM_STATUS_LABELS[status]}</span>
               {pending && <ConfirmAction label="Revoke invitation" question="Revoke this claim invitation? The link stops working." confirmLabel="Revoke" onConfirm={async () => { await revoke(pending) }} />}
               {player.published && <a className="ghost-button" href={`#player/${encodeURIComponent(player.slug)}`}>View</a>}

@@ -24,7 +24,7 @@ import { ArchiveStamp, TournamentAwardsTab, TournamentPlayersTab, TournamentResu
 import { loadTournamentPlayers, loadTournamentPlayerStats } from '../lib/publicPages'
 import { TournamentCard, TournamentTile } from './HomepageSections'
 import { IslandCallToAction, NumberedPager, PageBanner } from './IslandPage'
-import { CoverScene, PersonAvatar, TeamLogo, SportGlyph, TournamentEmblem } from './HomeArt'
+import { CoverScene, PersonAvatar, TeamLogo, SportGlyph } from './HomeArt'
 import { useAppConfig } from '../lib/useAppConfig'
 import { TournamentCover, TournamentLogo } from './TournamentBranding'
 import { publicTournamentBranding } from '../lib/tournamentBranding'
@@ -40,7 +40,7 @@ type PublicDetailRoute = { kind: PublicDetailKind; slug: string }
 function isPublicCollectionRoute(route: PublicRoute): route is PublicCollectionRoute { return ['organizations', 'tournaments', 'teams', 'players', 'matches', 'standings', 'bracket'].includes(route.kind) }
 function isPublicDetailRoute(route: PublicRoute): route is PublicDetailRoute { return ['organization', 'tournament', 'team', 'player', 'history', 'match'].includes(route.kind) }
 
-function Loading() { return <div className="public-state">Loading published records…</div> }
+function Loading() { return <div className="public-state public-skeleton"><span className="skeleton sk-block" /><span className="skeleton sk-line" /><span className="skeleton sk-line" style={{ width: '70%' }} /><span className="skeleton sk-block" style={{ height: 120 }} /></div> }
 // Plain language only: raw service messages are never shown to visitors.
 function ErrorState() { return <div className="public-state error-state" role="alert"><p><strong>This page could not be loaded.</strong> Check your connection and try again.</p><button type="button" className="ed-btn ed-btn-ghost ed-btn-sm" onClick={() => window.location.reload()}>Retry</button></div> }
 function Empty({ message }: { message: string }) { return <div className="public-state"><Globe2 size={22} /><p>{message}</p></div> }
