@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode, RefObject } from 'react'
 import { ArrowRight, CalendarDays, Check, Clock3, Info, PlayCircle, RefreshCw, Shield, Trophy, Users, WifiOff } from 'lucide-react'
 import { getPublishedMatches, getPublishedPlayers, getPublishedTeams, getPublishedTournaments, getTournamentDirectoryDetails, type PublicRecord, type TournamentDirectoryDetail } from '../lib/publicData'
+import { getPublishedNews } from '../lib/news'
 import { RATING_METHOD_SUMMARY } from '../lib/playerRating'
 import { publicSupabase } from '../lib/supabase'
 import { publicTournamentBranding } from '../lib/tournamentBranding'
@@ -185,6 +186,11 @@ export function HomepageSections({ onCreateTournament }: { onCreateTournament: (
     const result = await loadMatchFeed(client, { statuses: ['confirmed'], newestFirst: true, limit: 80 })
     return result.needsMigration ? legacyResults() : result
   }, [])
+  const news = useSection<Record<string, unknown>[]>(async () => {
+    if (!client) return { data: [], error: NOT_CONFIGURED }
+    const result = await getPublishedNews(client)
+    return { data: result.data ?? [], error: result.error, needsMigration: false }
+  }, [])
 
   const tournamentRows = tournaments.data.tournaments
   const startOf = (id: string) => tournaments.data.details.get(id)?.startsAt ?? null
@@ -237,6 +243,13 @@ export function HomepageSections({ onCreateTournament }: { onCreateTournament: (
     <BrowseBySport tournaments={tournamentRows} ready={tournaments.status !== 'loading'} failed={tournaments.status === 'error' && !tournaments.loadedAt} />
     <SportsHub live={live} today={today} upcoming={upcomingMatches} results={results} online={online} />
     {show('featured') && <TournamentShowcase state={tournaments} promoted={promoted} spotlight={spotlight} />}
+    {show('news') && news.status === 'ready' && news.data.length > 0 && <section className="lp-section lp-news" id="news" aria-labelledby="news-title">
+      <header className="ed-section-head"><h2 id="news-title">News &amp; Announcements</h2><a className="ed-link" href="#news">View all <ArrowRight size={14} aria-hidden="true" /></a></header>
+      <ul className="lp-people">{news.data.slice(0, 4).map(item => <li key={String(item.id)}><a href={`#news/${encodeURIComponent(String(item.slug ?? item.id))}`}>
+        <span className="lp-people-mark lp-people-team"><SportGlyph sport={String(item.content_type ?? 'news')} /></span>
+        <span className="lp-people-text"><strong>{String(item.title)}</strong><small>{item.published_at ? new Date(String(item.published_at)).toLocaleDateString() : ''}</small></span>
+      </a></li>)}</ul>
+    </section>}
     <CommunitySpotlight results={results.data} showPlayers={show('top-players')} />
 
     <FinalCallToAction onCreateTournament={onCreateTournament} />

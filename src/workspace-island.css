@@ -96,7 +96,13 @@
 .in-workspace .ws-chooser-head h1 { color: #fff; font-size: clamp(1.9rem, 4vw, 2.8rem); letter-spacing: -.035em; }
 .in-workspace .ws-chooser-head p:last-child { color: rgba(238, 248, 252, .78); }
 .in-workspace .ws-chooser { margin-top: var(--s5); }
-.in-workspace .ws-choice { position: relative; overflow: hidden; }
+.in-workspace .ws-choice { position: relative; overflow: hidden; padding: 12px 14px !important; }
+.in-workspace .ws-choice-head h2 { font-size: 1.05rem !important; margin: 0; }
+.in-workspace .ws-choice-head p { font-size: .8rem !important; margin: 2px 0 0; }
+.in-workspace .ws-choice-icon { width: 36px !important; height: 36px !important; }
+.in-workspace .ws-workspace-mark, .in-workspace .ws-workspace-logo { width: 40px !important; height: 40px !important; }
+.in-workspace .ws-choice-list li { padding: 8px 10px !important; }
+.in-workspace .ws-choice-open { padding: 6px 12px !important; font-size: .85rem !important; }
 .in-workspace .ws-choice::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--wsi-lagoon); }
 .in-workspace .ws-choice-icon { background: rgba(0, 194, 220, .14); color: #0a6f86; }
 .in-workspace .ws-choice-platform_admin { color: #fff; border: 0; background: radial-gradient(360px 160px at 100% 0%, rgba(0, 194, 220, .32), transparent 70%), linear-gradient(120deg, var(--wsi-navy-2), var(--wsi-deep)); }
