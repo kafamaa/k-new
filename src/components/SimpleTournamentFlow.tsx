@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { tr } from '../lib/i18n'
-import { sportName } from '../lib/display'
 import type { FormEvent, ReactNode } from 'react'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import {
@@ -26,7 +25,6 @@ import {
 } from '../lib/simpleFlow'
 import { LineupEditor } from './LineupEditor'
 import { CompetitionEngine } from './CompetitionEngine'
-import { TournamentCover } from './TournamentBranding'
 import { loadSuspensions, refreshSuspensions, suspendedPlayerIds } from '../lib/discipline'
 import { DisciplinePanel } from './DisciplinePanel'
 import { ProtestsPanel } from './ProtestsPanel'
@@ -114,14 +112,7 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
     ...warnings.map(text => ({ text, tab: (/payment|squad/i.test(text) ? 'teams' : 'fixtures') as OrganizerTab })),
   ].slice(0, 5)
   return <div className="flow-home" data-active={homeTab}>
-    <section className="flow-cover flow-cover-fullbleed" aria-label="Tournament cover">
-      <TournamentCover client={client} path={tournament.cover_path} name={tournament.name} sport={tournament.sport} />
-      <div className="flow-cover-glass">
-        <p className="ed-eyebrow">{sportName(tournament.sport)}</p>
-        <h2>{tournament.name}</h2>
-        <p><span className={`flow-status-chip status-${tournament.status}`}>{simpleStatus(tournament.status)}</span></p>
-      </div>
-    </section>
+
     <nav className="flow-home-tabs" role="tablist" aria-label="Home sections">
       <button type="button" role="tab" aria-selected={homeTab === 'overview'} className={homeTab === 'overview' ? 'active' : ''} onClick={() => setHomeTab('overview')}>Overview</button>
       <button type="button" role="tab" aria-selected={homeTab === 'matches'} className={homeTab === 'matches' ? 'active' : ''} onClick={() => setHomeTab('matches')}>Matches</button>
