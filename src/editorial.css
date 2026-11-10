@@ -329,9 +329,19 @@ body { background: var(--ed-paper); color: var(--ed-text); font-family: var(--ed
 .ed-detail { padding-bottom: var(--s8); }
 .ed-cover { position: relative; isolation: isolate; min-height: clamp(120px, 18vh, 180px); display: grid; align-items: end; color: #fff; overflow: visible; background: var(--ed-ink); }
 .lp-live-ticker { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: linear-gradient(90deg, #041827, #0A5E77); color: #fff; overflow: hidden; }
+.lp-social-proof { padding: 12px 0; }
+.lp-social-proof-inner { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: center; font: 600 14px 'Space Grotesk', sans-serif; color: #0A5E77; }
+.lp-social-proof-inner span { display: inline-flex; align-items: center; gap: 6px; }
+html.dark .lp-social-proof-inner { color: #7DE8F4; }
 .lp-live-ticker-label { font: 700 12px 'Space Grotesk', sans-serif; letter-spacing: .1em; color: #FF3B4D; display: inline-flex; align-items: center; gap: 6px; flex: none; }
-.lp-live-ticker-track { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+.lp-live-ticker-track { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; animation: lp-ticker-scroll 40s linear infinite; }
+.lp-live-ticker-track:hover { animation-play-state: paused; }
 .lp-live-ticker-track::-webkit-scrollbar { display: none; }
+@keyframes lp-ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.lp-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; mix-blend-mode: screen; }
+.lp-hero-backdrop { transform: translateY(var(--parallax, 0px)); }
+.lp-hero-sea { transform: translateY(calc(var(--parallax, 0px) * 0.6)); }
+@media (prefers-reduced-motion: reduce) { .lp-hero-video { display: none; } .lp-live-ticker-track { animation: none; } .lp-hero-backdrop, .lp-hero-sea { transform: none !important; } }
 .lp-live-ticker-item { display: inline-flex; align-items: center; gap: 8px; color: #EAF9FD; text-decoration: none; font-size: 12px; white-space: nowrap; }
 .lp-live-ticker-item:hover { color: #00CFE8; }
 .lp-live-ticker-score { font: 700 13px 'Space Grotesk', sans-serif; color: #00CFE8; }

@@ -142,8 +142,34 @@ async function legacyResults(): Promise<Loaded<FeedMatch[]>> {
   return { data: (matches.data ?? []).slice(0, 40).map(row => { const tournament = row.tournaments as PublicRecord | null; return { id: String(row.id), tournamentId: String(row.tournament_id), tournamentName: String(tournament?.name ?? 'Tournament'), tournamentSlug: String(tournament?.slug ?? row.tournament_id), sport: '', stageId: String(row.stage_id ?? ''), stageName: null, stageFormat: null, stageOrder: 1, groupName: null, leg: 1, scheduledAt: row.scheduled_at ? String(row.scheduled_at) : null, venue: row.venue ? String(row.venue) : null, status: 'confirmed', home: side(row.home_team_id), away: side(row.away_team_id), homeScore: null, awayScore: null, outcome: null, confirmedAt: null, corrected: false } }), error: null }
 }
 
+function AnimatedNumber({ value }: { value: number | null }) {
+  const [display, setDisplay] = useState(0)
+  useEffect(() => {
+    if (value === null) return
+    const target = value
+    const start = performance.now()
+    const duration = 900
+    let raf = 0
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setDisplay(Math.round(target * eased))
+      if (t < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [value])
+  return <>{value === null ? '\u2013' : display.toLocaleString()}</>
+}
+
 export function HomepageSections({ onCreateTournament }: { onCreateTournament: () => void }) {
   const client = publicSupabase
+  const [parallax, setParallax] = useState(0)
+  useEffect(() => {
+    const onScroll = () => { if (document.visibilityState === 'visible') setParallax(Math.min(120, window.scrollY * 0.25)) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   // Published landing customization; built-in otherwise.
   const { config: appConfig } = useAppConfig()
   const landing = { ...DEFAULT_LANDING, ...appConfig.landing }
@@ -203,16 +229,16 @@ export function HomepageSections({ onCreateTournament }: { onCreateTournament: (
   const nextMatch = upcomingMatches.status === 'ready' ? upcomingMatches.data.find(match => match.status === 'scheduled') : undefined
   const heroMatch = firstLive ?? nextMatch
   const stats = <dl className="lp-hero-stats" aria-label="Platform summary">
-    {counts.data.active !== null && <div><dt>Active tournaments</dt><dd>{counts.data.active}</dd></div>}
-    {counts.data.teams !== null && <div><dt>Published teams</dt><dd>{counts.data.teams}</dd></div>}
-    {counts.data.players !== null && <div><dt>Published players</dt><dd>{counts.data.players}</dd></div>}
+    {counts.data.active !== null && <div><dt>Active tournaments</dt><dd><AnimatedNumber value={counts.data.active} /></dd></div>}
+    {counts.data.teams !== null && <div><dt>Published teams</dt><dd><AnimatedNumber value={counts.data.teams} /></dd></div>}
+    {counts.data.players !== null && <div><dt>Published players</dt><dd><AnimatedNumber value={counts.data.players} /></dd></div>}
   </dl>
 
   return <div className="lp lp-home">
     {live.status === 'ready' && live.data.length > 0 && <div className="lp-live-ticker" role="region" aria-label="Live matches">
       <span className="lp-live-ticker-label"><span className="ed-live-dot" aria-hidden="true" /> LIVE</span>
       <div className="lp-live-ticker-track">
-        {live.data.map(m => <a key={m.id} className="lp-live-ticker-item" href={`#matches/${encodeURIComponent(m.id)}`}>
+        {[...live.data, ...live.data].map((m, i) => <a key={`${m.id}-${i}`} className="lp-live-ticker-item" href={`#matches/${encodeURIComponent(m.id)}`}>
           <Crest name={m.home.name ?? 'Team'} logoUrl={m.home.logo} size="sm" />
           <span className="lp-live-ticker-score">{m.homeScore !== null && m.awayScore !== null ? `${m.homeScore}–${m.awayScore}` : 'vs'}</span>
           <Crest name={m.away.name ?? 'Team'} logoUrl={m.away.logo} size="sm" />
@@ -225,8 +251,10 @@ export function HomepageSections({ onCreateTournament }: { onCreateTournament: (
     {/* Landing layout (owner mockup, 2026-11-04): hero with the live or next real match, Find your
         sport, Match Center, Discover Tournaments, Players & Teams and the closing call to action.
         Standings, brackets, news and the archive keep their own pages. Real published data only. */}
-    <section className="lp-hero" aria-labelledby="lp-hero-title">
-      <span className="lp-hero-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${HERO_WIDE})` }} />
+    <section className="lp-hero" aria-labelledby="lp-hero-title" style={{ ['--parallax' as string]: `${parallax}px` } as React.CSSProperties}>
+      <span className="lp-hero-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${HERO_WIDE})`, transform: `translateY(${parallax}px)` }}>
+        <video className="lp-hero-video" autoPlay muted loop playsInline poster={HERO_WIDE} src="/assets/hero-loop.mp4" aria-hidden="true" onError={(e) => { (e.currentTarget as HTMLVideoElement).style.display = 'none' }} />
+      </span>
       <span className="lp-hero-sea" aria-hidden="true" />
       {/* The design photo has a sample card painted on it; the slot always covers it with a real card. */}
       <div className="lp-hero-frame">
@@ -251,6 +279,13 @@ export function HomepageSections({ onCreateTournament }: { onCreateTournament: (
       </div>
     </section>
 
+    <section className="lp-section lp-social-proof" aria-label="Platform activity">
+      <div className="lp-social-proof-inner">
+        <span><AnimatedNumber value={counts.data.active} /> tournaments running</span>
+        <span><AnimatedNumber value={counts.data.teams} /> teams registered</span>
+        <span><AnimatedNumber value={counts.data.players} /> players published</span>
+      </div>
+    </section>
     <BrowseBySport tournaments={tournamentRows} ready={tournaments.status !== 'loading'} failed={tournaments.status === 'error' && !tournaments.loadedAt} />
     <SportsHub live={live} today={today} upcoming={upcomingMatches} results={results} online={online} />
     {show('featured') && <TournamentShowcase state={tournaments} promoted={promoted} spotlight={spotlight} />}
