@@ -87,7 +87,7 @@ describe('Stage 4 and 5: separate tournament workspace', () => {
   // attention and activity (registration and the public page live on Teams and the header).
   it('shows next matches, latest results, attention and activity on Home', () => {
     const flow = read('src/components/SimpleTournamentFlow.tsx')
-    for (const heading of ['<h4>Next matches</h4>', '<h4>Latest results</h4>', "<h4>{tr('workspace.needsAttention', 'Needs attention')}</h4>", '<h4>Latest activity</h4>']) expect(flow).toContain(heading)
+    for (const heading of ['<h4>Next matches</h4>', '<h4>Latest results</h4>', "<h4>{tr('workspace.needsAttention', 'Needs attention')}</h4>"]) expect(flow).toContain(heading)
     expect(flow).toContain("'Score not recorded'")
     expect(flow).toContain('Statistics rebuilt from confirmed results')
   })

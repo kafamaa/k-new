@@ -146,9 +146,7 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
         <section className="flow-panel"><header><h4>{tr('workspace.needsAttention', 'Needs attention')}</h4></header>
           {attention.length ? <ul className="flow-attention">{attention.map(item => <li key={item.text}><button type="button" onClick={() => onOpenTab(item.tab)}><span>{item.text}</span><ArrowRight size={14} /></button></li>)}</ul> : <p className="empty-note">Nothing needs fixing.</p>}
         </section>
-        <section className="flow-panel"><header><h4>Latest activity</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('reports')}>History</button></header>
-          {activity.length ? <ul className="flow-mini-list">{activity.slice(0, 5).map(item => <li key={item.id}><strong>{item.label}</strong><small>{new Date(item.at).toLocaleString('en-GB', { timeZone: 'Indian/Maldives', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</small></li>)}</ul> : <p className="empty-note">Changes appear here as you work.</p>}
-        </section>
+
       </aside>
     </div>
   </div>
