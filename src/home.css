@@ -557,7 +557,7 @@ a.lp-hero-card:focus-visible { outline: 3px solid var(--hm-cyan); outline-offset
 .app-shell.is-island > .ed-main { flex: 1 0 auto; }
 .ic-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
 .ic-grid > li { min-width: 0; }
-.ic-card { position: relative; display: grid; justify-items: center; gap: 6px; height: 100%; box-sizing: border-box; padding: 0 16px 16px; overflow: hidden; border-radius: 16px; background: rgba(255, 255, 255, .9); border: 1px solid rgba(11, 37, 64, .1); box-shadow: 0 1px 2px rgba(11, 37, 64, .06), 0 8px 24px rgba(11, 37, 64, .08); color: #0b2540; text-align: center; }
+.ic-card { position: relative; display: grid; justify-items: center; gap: 6px; height: 100%; min-height: 140px; box-sizing: border-box; padding: 0 16px 16px; overflow: hidden; border-radius: 16px; background: rgba(255, 255, 255, .9); border: 1px solid rgba(11, 37, 64, .1); box-shadow: 0 1px 2px rgba(11, 37, 64, .06), 0 8px 24px rgba(11, 37, 64, .08); color: #0b2540; text-align: center; }
 .ic-card:hover { border-color: #1fd6e8; }
 .ic-cover { display: block; width: calc(100% + 32px); margin: 0 -16px; aspect-ratio: 345 / 125; overflow: hidden; background: #0a2a45; }
 .ic-cover .lp-cover-art { position: static; width: 100%; height: 100%; }

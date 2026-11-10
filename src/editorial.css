@@ -329,11 +329,7 @@ body { background: var(--ed-paper); color: var(--ed-text); font-family: var(--ed
 .ed-detail { padding-bottom: var(--s8); }
 .ed-cover { position: relative; isolation: isolate; min-height: clamp(120px, 18vh, 180px); display: grid; align-items: end; color: #fff; overflow: visible; background: var(--ed-ink); }
 .lp-live-ticker { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: linear-gradient(90deg, #041827, #0A5E77); color: #fff; overflow: hidden; }
-@media (min-width: 1100px) {
-  .lp-home { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .lp-home > .lp-hero, .lp-home > .lp-section.lp-sports, .lp-home > .lp-section.lp-hub { grid-column: 1 / -1; }
-  .lp-home > .lp-section.lp-showcase, .lp-home > .lp-section.lp-community, .lp-home > .lp-section.lp-news { grid-column: span 2; }
-}
+/* Bento grid disabled to avoid layout collapse; sections stack vertically. */
 .lp-social-proof { padding: 12px 0; }
 .lp-social-proof-inner { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: center; font: 600 14px 'Space Grotesk', sans-serif; color: #0A5E77; }
 .lp-social-proof-inner span { display: inline-flex; align-items: center; gap: 6px; }
