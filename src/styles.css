@@ -4,6 +4,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 :root{font-family:'Plus Jakarta Sans',sans-serif;color:#0B1F33;background:#F4F8FB;font-synthesis:none;--navy:#041827;--ink:#0B1F33;--muted:#64748B;--cyan:#00CFE8;--line:#DCE7F0;--glass:rgba(255,255,255,.74)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;overflow-x:hidden}img{max-width:100%;height:auto}table{max-width:100%}
 .tournament-card, .ic-card { transition: transform .25s ease, box-shadow .25s ease; }
+.flow-cover { position: relative; border-radius: 16px; overflow: hidden; min-height: 160px; margin-bottom: 16px; isolation: isolate; }
+.flow-cover .tournament-cover { position: absolute; inset: 0; width: 100%; height: 100%; }
+.flow-cover-glass { position: relative; padding: 24px; background: linear-gradient(135deg, rgba(4,24,39,.55), rgba(10,94,119,.35)); backdrop-filter: blur(6px); color: #fff; min-height: 160px; display: flex; flex-direction: column; justify-content: flex-end; }
+.flow-cover-glass h2 { margin: 4px 0; font-size: clamp(20px, 4vw, 32px); }
+.flow-cover-glass .ed-eyebrow { color: #7DE8F4; }
+.flow-status-chip { display: inline-block; padding: 4px 10px; border-radius: 999px; font: 600 12px 'Space Grotesk', sans-serif; background: rgba(255,255,255,.18); }
+.flow-next-hero { background: linear-gradient(135deg, #0A5E77, #00CFE8); color: #fff; border: none; }
+.flow-next-hero h3, .flow-next-hero p { color: #fff; }
+.flow-next-hero .primary-button { background: #fff; color: #0A5E77; }
+.flow-progress-rail { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0 0 16px; overflow-x: auto; }
+.flow-rail-step button { display: flex; flex-direction: column; align-items: center; gap: 4px; background: transparent; border: none; cursor: pointer; color: #555; }
+.flow-rail-step.is-done .flow-rail-dot { background: #0A5E77; color: #fff; }
+.flow-rail-step.is-current .flow-rail-dot { background: #00CFE8; color: #041827; box-shadow: 0 0 0 4px rgba(0,207,232,.25); }
+.flow-rail-dot { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: #e5e7eb; font: 700 12px 'Space Grotesk', sans-serif; }
+.flow-rail-label { font-size: 12px; white-space: nowrap; }
+.flow-card { transition: transform .2s ease, box-shadow .2s ease; }
+.flow-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.15); }
+.flow-panel { transition: transform .2s ease, box-shadow .2s ease; }
+.flow-panel:hover { transform: translateY(-2px); }
+html.dark .flow-cover-glass { background: linear-gradient(135deg, rgba(4,24,39,.7), rgba(10,94,119,.45)); }
+html.dark .flow-next-hero { background: linear-gradient(135deg, #041827, #0A5E77); }
+html.dark .flow-rail-dot { background: #1e3a5f; color: #9FDCE8; }
+html.dark .flow-rail-step.is-done .flow-rail-dot { background: #00CFE8; color: #041827; }
+@media (prefers-reduced-motion: reduce) { .flow-card, .flow-panel { transition: none; } .flow-rail-dot { transition: none; } }
+@media (max-width: 640px) { .flow-cards { grid-template-columns: 1fr !important; } .flow-home-grid { grid-template-columns: 1fr !important; } }
 .tournament-card:hover, .ic-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.18); }
 .tournament-card:hover .tournament-logo img, .ic-card:hover .ic-mark img { transform: scale(1.06); transition: transform .25s ease; }
 /* Dark mode: comprehensive overrides */

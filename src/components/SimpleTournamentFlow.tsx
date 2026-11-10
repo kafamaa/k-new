@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import { tr } from '../lib/i18n'
+import { sportName } from '../lib/display'
 import type { FormEvent, ReactNode } from 'react'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import {
@@ -25,6 +26,7 @@ import {
 } from '../lib/simpleFlow'
 import { LineupEditor } from './LineupEditor'
 import { CompetitionEngine } from './CompetitionEngine'
+import { TournamentCover } from './TournamentBranding'
 import { loadSuspensions, refreshSuspensions, suspendedPlayerIds } from '../lib/discipline'
 import { DisciplinePanel } from './DisciplinePanel'
 import { ProtestsPanel } from './ProtestsPanel'
@@ -64,6 +66,26 @@ export function MoreDetails({ open, onToggle, label = 'More details', children }
 
 // --- Home -------------------------------------------------------------------------
 
+function AnimatedNumber({ value }: { value: number | null }) {
+  const [display, setDisplay] = useState(0)
+  useEffect(() => {
+    if (value === null) return
+    const target = value
+    const start = performance.now()
+    const duration = 700
+    let raf = 0
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setDisplay(Math.round(target * eased))
+      if (t < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [value])
+  return <>{value === null ? '–' : display.toLocaleString()}</>
+}
+
 export function SimpleHome({ client, tournament, entries, matches, awards, onOpenTab, scores, warnings, activity = [] }: Pick<Base, 'client' | 'tournament' | 'entries' | 'matches' | 'onOpenTab'> & { awards: Array<{ kind: string; label: string; recipient: string }>; onExit?: () => void; registrationOpen?: boolean; scores: Map<string, { homeScore: number; awayScore: number }>; warnings: string[]; activity?: Array<{ id: string; label: string; at: string }> }) {
   // Tournament Home is a short control centre (owner, 2026-11-03): one next
   // action, six counts, and four short lists. No forms or settings here.
@@ -91,13 +113,24 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
     ...warnings.map(text => ({ text, tab: (/payment|squad/i.test(text) ? 'teams' : 'fixtures') as OrganizerTab })),
   ].slice(0, 5)
   return <div className="flow-home">
-    <section className="flow-next" aria-label="Next action">
+    <section className="flow-cover" aria-label="Tournament cover">
+      <TournamentCover client={client} path={tournament.cover_path} name={tournament.name} sport={tournament.sport} />
+      <div className="flow-cover-glass">
+        <p className="ed-eyebrow">{sportName(tournament.sport)}</p>
+        <h2>{tournament.name}</h2>
+        <p><span className={`flow-status-chip status-${tournament.status}`}>{simpleStatus(tournament.status)}</span></p>
+      </div>
+    </section>
+    <section className="flow-next flow-next-hero" aria-label="Next action">
       <p className="ed-eyebrow">{tr('workspace.nextAction', 'Next action')}</p>
       <h3>{action.label}</h3>
       <p>{action.reason}</p>
       <div className="button-row">{action.publicPage ? <a className="primary-button flow-primary" href={publicHref}>{action.label} <ArrowRight size={16} /></a> : <button type="button" className="primary-button flow-primary" onClick={() => onOpenTab(action.tab)}>{action.label} <ArrowRight size={16} /></button>}</div>
     </section>
-    <div className="flow-cards flow-cards-6">{homeSummary(entries, matches, { players, issues }).map(card => <button type="button" key={card.key} className={`flow-card${card.warn ? ' tone-warn' : ''}`} onClick={() => onOpenTab(card.tab)}><span>{card.label}</span><strong>{card.value}</strong></button>)}</div>
+    <ol className="flow-progress-rail" aria-label="Tournament progress">
+      {flowSteps(flowInput(tournament, entries, matches)).map((step, index) => <li key={step.id} className={`flow-rail-step is-${step.state}`}><button type="button" onClick={() => onOpenTab(step.tab)}><span className="flow-rail-dot">{step.state === 'done' ? <Check size={12} /> : index + 1}</span><span className="flow-rail-label">{step.label}</span></button></li>)}
+    </ol>
+    <div className="flow-cards flow-cards-6">{homeSummary(entries, matches, { players, issues }).map(card => <button type="button" key={card.key} className={`flow-card${card.warn ? ' tone-warn' : ''}`} onClick={() => onOpenTab(card.tab)}><span>{card.label}</span><strong>{/^\\d+$/.test(card.value) ? <AnimatedNumber value={Number(card.value)} /> : card.value}</strong></button>)}</div>
     <div className="flow-home-grid">
       <section className="flow-panel"><header><h4>Next matches</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('matches')}>All matches</button></header>
         {upcoming.length ? <ul className="flow-mini-list">{upcoming.map(match => <li key={match.id}><strong>{teamsLabel(match)}</strong><small>{match.status === 'live' ? 'Live now' : matchWhen(match.scheduled_at!)}{match.venue ? ` · ${match.venue}` : ''}</small></li>)}</ul> : <p className="empty-note">No match with a date yet.</p>}
