@@ -113,7 +113,7 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
     ...warnings.map(text => ({ text, tab: (/payment|squad/i.test(text) ? 'teams' : 'fixtures') as OrganizerTab })),
   ].slice(0, 5)
   return <div className="flow-home">
-    <section className="flow-cover" aria-label="Tournament cover">
+    <section className="flow-cover flow-cover-fullbleed" aria-label="Tournament cover">
       <TournamentCover client={client} path={tournament.cover_path} name={tournament.name} sport={tournament.sport} />
       <div className="flow-cover-glass">
         <p className="ed-eyebrow">{sportName(tournament.sport)}</p>
@@ -121,29 +121,35 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
         <p><span className={`flow-status-chip status-${tournament.status}`}>{simpleStatus(tournament.status)}</span></p>
       </div>
     </section>
-    <section className="flow-next flow-next-hero" aria-label="Next action">
-      <p className="ed-eyebrow">{tr('workspace.nextAction', 'Next action')}</p>
-      <h3>{action.label}</h3>
-      <p>{action.reason}</p>
-      <div className="button-row">{action.publicPage ? <a className="primary-button flow-primary" href={publicHref}>{action.label} <ArrowRight size={16} /></a> : <button type="button" className="primary-button flow-primary" onClick={() => onOpenTab(action.tab)}>{action.label} <ArrowRight size={16} /></button>}</div>
-    </section>
-    <ol className="flow-progress-rail" aria-label="Tournament progress">
-      {flowSteps(flowInput(tournament, entries, matches)).map((step, index) => <li key={step.id} className={`flow-rail-step is-${step.state}`}><button type="button" onClick={() => onOpenTab(step.tab)}><span className="flow-rail-dot">{step.state === 'done' ? <Check size={12} /> : index + 1}</span><span className="flow-rail-label">{step.label}</span></button></li>)}
-    </ol>
-    <div className="flow-cards flow-cards-6">{homeSummary(entries, matches, { players, issues }).map(card => <button type="button" key={card.key} className={`flow-card${card.warn ? ' tone-warn' : ''}`} onClick={() => onOpenTab(card.tab)}><span>{card.label}</span><strong>{/^\\d+$/.test(card.value) ? <AnimatedNumber value={Number(card.value)} /> : card.value}</strong></button>)}</div>
-    <div className="flow-home-grid">
-      <section className="flow-panel"><header><h4>Next matches</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('matches')}>All matches</button></header>
-        {upcoming.length ? <ul className="flow-mini-list">{upcoming.map(match => <li key={match.id}><strong>{teamsLabel(match)}</strong><small>{match.status === 'live' ? 'Live now' : matchWhen(match.scheduled_at!)}{match.venue ? ` · ${match.venue}` : ''}</small></li>)}</ul> : <p className="empty-note">No match with a date yet.</p>}
-      </section>
-      <section className="flow-panel"><header><h4>Latest results</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('matches')}>Results</button></header>
-        {recent.length ? <ul className="flow-mini-list">{recent.map(match => { const score = scores.get(match.id); return <li key={match.id}><strong>{match.home_team_name ?? 'Team'} {score ? `${score.homeScore} – ${score.awayScore}` : 'vs'} {match.away_team_name ?? 'Team'}</strong><small>{score ? 'Official' : 'Score not recorded'}</small></li> })}</ul> : <p className="empty-note">No official results yet.</p>}
-      </section>
-      <section className="flow-panel"><header><h4>{tr('workspace.needsAttention', 'Needs attention')}</h4></header>
-        {attention.length ? <ul className="flow-attention">{attention.map(item => <li key={item.text}><button type="button" onClick={() => onOpenTab(item.tab)}><span>{item.text}</span><ArrowRight size={14} /></button></li>)}</ul> : <p className="empty-note">Nothing needs fixing.</p>}
-      </section>
-      <section className="flow-panel"><header><h4>Latest activity</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('reports')}>History</button></header>
-        {activity.length ? <ul className="flow-mini-list">{activity.slice(0, 5).map(item => <li key={item.id}><strong>{item.label}</strong><small>{new Date(item.at).toLocaleString('en-GB', { timeZone: 'Indian/Maldives', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</small></li>)}</ul> : <p className="empty-note">Changes appear here as you work.</p>}
-      </section>
+    <div className="flow-dashboard">
+      <div className="flow-dashboard-main">
+        <section className="flow-next flow-next-hero" aria-label="Next action">
+          <p className="ed-eyebrow">{tr('workspace.nextAction', 'Next action')}</p>
+          <h3>{action.label}</h3>
+          <p>{action.reason}</p>
+          <div className="button-row">{action.publicPage ? <a className="primary-button flow-primary" href={publicHref}>{action.label} <ArrowRight size={16} /></a> : <button type="button" className="primary-button flow-primary" onClick={() => onOpenTab(action.tab)}>{action.label} <ArrowRight size={16} /></button>}</div>
+        </section>
+        <ol className="flow-progress-rail" aria-label="Tournament progress">
+          {flowSteps(flowInput(tournament, entries, matches)).map((step, index) => <li key={step.id} className={`flow-rail-step is-${step.state}`}><button type="button" onClick={() => onOpenTab(step.tab)}><span className="flow-rail-dot">{step.state === 'done' ? <Check size={12} /> : index + 1}</span><span className="flow-rail-label">{step.label}</span></button></li>)}
+        </ol>
+        <div className="flow-home-grid flow-home-grid-2">
+          <section className="flow-panel"><header><h4>Next matches</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('matches')}>All matches</button></header>
+            {upcoming.length ? <ul className="flow-mini-list">{upcoming.map(match => <li key={match.id}><strong>{teamsLabel(match)}</strong><small>{match.status === 'live' ? 'Live now' : matchWhen(match.scheduled_at!)}{match.venue ? ` · ${match.venue}` : ''}</small></li>)}</ul> : <p className="empty-note">No match with a date yet.</p>}
+          </section>
+          <section className="flow-panel"><header><h4>Latest results</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('matches')}>Results</button></header>
+            {recent.length ? <ul className="flow-mini-list">{recent.map(match => { const score = scores.get(match.id); return <li key={match.id}><strong>{match.home_team_name ?? 'Team'} {score ? `${score.homeScore} – ${score.awayScore}` : 'vs'} {match.away_team_name ?? 'Team'}</strong><small>{score ? 'Official' : 'Score not recorded'}</small></li> })}</ul> : <p className="empty-note">No official results yet.</p>}
+          </section>
+        </div>
+      </div>
+      <aside className="flow-dashboard-side">
+        <div className="flow-cards flow-cards-6">{homeSummary(entries, matches, { players, issues }).map(card => <button type="button" key={card.key} className={`flow-card${card.warn ? ' tone-warn' : ''}`} onClick={() => onOpenTab(card.tab)}><span>{card.label}</span><strong>{/^\\d+$/.test(card.value) ? <AnimatedNumber value={Number(card.value)} /> : card.value}</strong></button>)}</div>
+        <section className="flow-panel"><header><h4>{tr('workspace.needsAttention', 'Needs attention')}</h4></header>
+          {attention.length ? <ul className="flow-attention">{attention.map(item => <li key={item.text}><button type="button" onClick={() => onOpenTab(item.tab)}><span>{item.text}</span><ArrowRight size={14} /></button></li>)}</ul> : <p className="empty-note">Nothing needs fixing.</p>}
+        </section>
+        <section className="flow-panel"><header><h4>Latest activity</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('reports')}>History</button></header>
+          {activity.length ? <ul className="flow-mini-list">{activity.slice(0, 5).map(item => <li key={item.id}><strong>{item.label}</strong><small>{new Date(item.at).toLocaleString('en-GB', { timeZone: 'Indian/Maldives', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</small></li>)}</ul> : <p className="empty-note">Changes appear here as you work.</p>}
+        </section>
+      </aside>
     </div>
   </div>
 }
