@@ -86,7 +86,7 @@ function AnimatedNumber({ value }: { value: number | null }) {
   return <>{value === null ? '–' : display.toLocaleString()}</>
 }
 
-export function SimpleHome({ client, tournament, entries, matches, awards, onOpenTab, scores, warnings, activity = [] }: Pick<Base, 'client' | 'tournament' | 'entries' | 'matches' | 'onOpenTab'> & { awards: Array<{ kind: string; label: string; recipient: string }>; onExit?: () => void; registrationOpen?: boolean; scores: Map<string, { homeScore: number; awayScore: number }>; warnings: string[]; activity?: Array<{ id: string; label: string; at: string }> }) {
+export function SimpleHome({ client, tournament, entries, matches, awards, onOpenTab, scores, warnings }: Pick<Base, 'client' | 'tournament' | 'entries' | 'matches' | 'onOpenTab'> & { awards: Array<{ kind: string; label: string; recipient: string }>; onExit?: () => void; registrationOpen?: boolean; scores: Map<string, { homeScore: number; awayScore: number }>; warnings: string[]; activity?: Array<{ id: string; label: string; at: string }> }) {
   // Tournament Home is a short control centre (owner, 2026-11-03): one next
   // action, six counts, and four short lists. No forms or settings here.
   const conflicts = useBracketConflicts(client, tournament.id, matches.length + entries.length)
@@ -97,6 +97,7 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
   const approved = entries.filter(entry => entry.application_status === 'approved')
   const approvedKey = approved.map(entry => `${entry.id}:${entry.roster_status}`).join(',')
   const [players, setPlayers] = useState<number | null>(null)
+  const [homeTab, setHomeTab] = useState<'overview' | 'matches' | 'issues'>('overview')
   useEffect(() => {
     let active = true
     void Promise.all(approved.map(async entry => (await loadEntrySquad(client, entry.id)).data.length)).then(counts => { if (active) setPlayers(counts.reduce((sum, value) => sum + value, 0)) })
@@ -112,7 +113,7 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
     ...(conflicts ? [{ text: `${conflicts} later match${conflicts === 1 ? '' : 'es'} hold a team that no longer qualifies.`, tab: 'standings' as OrganizerTab }] : []),
     ...warnings.map(text => ({ text, tab: (/payment|squad/i.test(text) ? 'teams' : 'fixtures') as OrganizerTab })),
   ].slice(0, 5)
-  return <div className="flow-home">
+  return <div className="flow-home" data-active={homeTab}>
     <section className="flow-cover flow-cover-fullbleed" aria-label="Tournament cover">
       <TournamentCover client={client} path={tournament.cover_path} name={tournament.name} sport={tournament.sport} />
       <div className="flow-cover-glass">
@@ -121,18 +122,23 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
         <p><span className={`flow-status-chip status-${tournament.status}`}>{simpleStatus(tournament.status)}</span></p>
       </div>
     </section>
+    <nav className="flow-home-tabs" role="tablist" aria-label="Home sections">
+      <button type="button" role="tab" aria-selected={homeTab === 'overview'} className={homeTab === 'overview' ? 'active' : ''} onClick={() => setHomeTab('overview')}>Overview</button>
+      <button type="button" role="tab" aria-selected={homeTab === 'matches'} className={homeTab === 'matches' ? 'active' : ''} onClick={() => setHomeTab('matches')}>Matches</button>
+      <button type="button" role="tab" aria-selected={homeTab === 'issues'} className={homeTab === 'issues' ? 'active' : ''} onClick={() => setHomeTab('issues')}>Issues</button>
+    </nav>
     <div className="flow-dashboard">
       <div className="flow-dashboard-main">
-        <section className="flow-next flow-next-hero" aria-label="Next action">
+        <section className="flow-next flow-next-hero flow-tab-overview" aria-label="Next action">
           <p className="ed-eyebrow">{tr('workspace.nextAction', 'Next action')}</p>
           <h3>{action.label}</h3>
           <p>{action.reason}</p>
           <div className="button-row">{action.publicPage ? <a className="primary-button flow-primary" href={publicHref}>{action.label} <ArrowRight size={16} /></a> : <button type="button" className="primary-button flow-primary" onClick={() => onOpenTab(action.tab)}>{action.label} <ArrowRight size={16} /></button>}</div>
         </section>
-        <ol className="flow-progress-rail" aria-label="Tournament progress">
+        <ol className="flow-progress-rail flow-tab-overview" aria-label="Tournament progress">
           {flowSteps(flowInput(tournament, entries, matches)).map((step, index) => <li key={step.id} className={`flow-rail-step is-${step.state}`}><button type="button" onClick={() => onOpenTab(step.tab)}><span className="flow-rail-dot">{step.state === 'done' ? <Check size={12} /> : index + 1}</span><span className="flow-rail-label">{step.label}</span></button></li>)}
         </ol>
-        <div className="flow-home-grid flow-home-grid-2">
+        <div className="flow-home-grid flow-home-grid-2 flow-tab-matches">
           <section className="flow-panel"><header><h4>Next matches</h4><button type="button" className="ghost-button" onClick={() => onOpenTab('matches')}>All matches</button></header>
             {upcoming.length ? <ul className="flow-mini-list">{upcoming.map(match => <li key={match.id}><strong>{teamsLabel(match)}</strong><small>{match.status === 'live' ? 'Live now' : matchWhen(match.scheduled_at!)}{match.venue ? ` · ${match.venue}` : ''}</small></li>)}</ul> : <p className="empty-note">No match with a date yet.</p>}
           </section>
@@ -142,13 +148,15 @@ export function SimpleHome({ client, tournament, entries, matches, awards, onOpe
         </div>
       </div>
       <aside className="flow-dashboard-side">
-        <div className="flow-cards flow-cards-6">{homeSummary(entries, matches, { players, issues }).map(card => <button type="button" key={card.key} className={`flow-card${card.warn ? ' tone-warn' : ''}`} onClick={() => onOpenTab(card.tab)}><span>{card.label}</span><strong>{/^\\d+$/.test(card.value) ? <AnimatedNumber value={Number(card.value)} /> : card.value}</strong></button>)}</div>
-        <section className="flow-panel"><header><h4>{tr('workspace.needsAttention', 'Needs attention')}</h4></header>
+        <div className="flow-cards flow-cards-6 flow-tab-overview">{homeSummary(entries, matches, { players, issues }).map(card => <button type="button" key={card.key} className={`flow-card${card.warn ? ' tone-warn' : ''}`} onClick={() => onOpenTab(card.tab)}><span>{card.label}</span><strong>{/^\\d+$/.test(card.value) ? <AnimatedNumber value={Number(card.value)} /> : card.value}</strong></button>)}</div>
+        <section className="flow-panel flow-tab-issues"><header><h4>{tr('workspace.needsAttention', 'Needs attention')}</h4></header>
           {attention.length ? <ul className="flow-attention">{attention.map(item => <li key={item.text}><button type="button" onClick={() => onOpenTab(item.tab)}><span>{item.text}</span><ArrowRight size={14} /></button></li>)}</ul> : <p className="empty-note">Nothing needs fixing.</p>}
         </section>
 
       </aside>
     </div>
+    <button type="button" className="flow-fab" onClick={() => onOpenTab(action.tab)} aria-label={action.label}>{action.label} <ArrowRight size={14} /></button>
+    <div className="flow-bottom-bar"><span>{action.label}</span><button type="button" className="flow-bottom-action" onClick={() => onOpenTab(action.tab)}>Go <ArrowRight size={14} /></button></div>
   </div>
 }
 
