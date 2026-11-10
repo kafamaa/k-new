@@ -587,7 +587,8 @@
 .team-card { border: 1px solid var(--ed-line, rgba(11, 31, 58, .12)); border-radius: 14px; background: var(--ed-surface, #fff); overflow: hidden; }
 .team-card.is-open { border-color: var(--ed-accent, #19c2c9); box-shadow: 0 6px 18px rgba(4, 24, 39, .08); }
 .team-card-main { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 10px; padding: 10px 12px; }
-.team-card-crest { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: #0b3a52; color: #fff; font-weight: 800; font-size: .85rem; flex: none; }
+.team-card-crest { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: #0b3a52; color: #fff; font-weight: 800; font-size: .85rem; flex: none; object-fit: contain; }
+img.team-card-crest { background: #fff; padding: 4px; }
 .team-card-text { display: grid; min-width: 0; }
 .team-card-text strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .team-card-text span { font-size: .8rem; color: var(--ed-muted, #5b6b7b); }

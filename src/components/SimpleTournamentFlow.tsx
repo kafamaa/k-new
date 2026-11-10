@@ -172,6 +172,7 @@ export function SimpleTeams({ client, user, tournament, entries, matches, steps,
   // team cards with one plain status, and a Manage Team panel for the details.
   const [mode, setMode] = useState<'link' | 'manual' | null>(() => tournament.status === 'registration_open' ? 'link' : null)
   const [counts, setCounts] = useState<Map<string, number>>(new Map())
+  const [teamLogos, setTeamLogos] = useState<Map<string, string | null>>(new Map())
   const [openEntry, setOpenEntry] = useState<string | null>(null)
   const [confirming, setConfirming] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -185,6 +186,19 @@ export function SimpleTeams({ client, user, tournament, entries, matches, steps,
     // entryKey captures the entries that matter for the counts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client, entryKey, openEntry])
+  useEffect(() => {
+    let active = true
+    const ids = listed.map(entry => entry.team_id).filter(Boolean)
+    if (!ids.length) return
+    void client.from('teams').select('id,logo_url').in('id', ids).then(result => {
+      if (!active || result.error) return
+      const map = new Map<string, string | null>()
+      for (const row of (result.data ?? []) as Array<{ id: string; logo_url: string | null }>) map.set(row.id, row.logo_url)
+      setTeamLogos(map)
+    })
+    return () => { active = false }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client, entryKey])
   const rosterStep = stepData(steps, 5)
   const minimum = Number(rosterStep.rosterMin) > 0 ? Number(rosterStep.rosterMin) : SUGGESTED_SPORT_SETTINGS[tournament.sport as Sport]?.rosterMin ?? 1
   const fee = chargesFee(entries)
@@ -237,7 +251,7 @@ export function SimpleTeams({ client, user, tournament, entries, matches, steps,
         const open = openEntry === entry.id
         return <li key={entry.id} className={`team-card${open ? ' is-open' : ''}`}>
           <div className="team-card-main">
-            <span className="team-card-crest" aria-hidden="true">{(entry.team_name ?? 'T').split(/\s+/).map(word => word[0]).join('').slice(0, 2).toUpperCase()}</span>
+            {teamLogos.get(entry.team_id) ? <img className="team-card-crest" src={teamLogos.get(entry.team_id)!} alt="" /> : <span className="team-card-crest" aria-hidden="true">{(entry.team_name ?? 'T').split(/\s+/).map(word => word[0]).join('').slice(0, 2).toUpperCase()}</span>}
             <div className="team-card-text">
               <strong>{entry.team_name ?? 'Team'}</strong>
               <span>{applicationStatusLabel(entry.application_status)} · {players === null ? '… players' : `${players}/${minimum} players`}{fee ? ` · ${paymentStatusLabel(entry.payment_status)}` : ''}{problems.length ? ` · ${problems.length} eligibility issue${problems.length === 1 ? '' : 's'}` : ''}</span>
