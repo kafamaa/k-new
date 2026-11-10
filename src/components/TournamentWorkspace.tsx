@@ -380,6 +380,7 @@ export function TournamentWorkspace({ client, user, organization, tournamentId, 
     {/* Five-step progress: Create, Teams, Schedule, Play, Finish. */}
     <FlowProgress tournament={tournament} entries={entries} matches={matches} onOpenTab={onOpenTab} />
 
+    <div className="cockpit-body">
     <nav className="cockpit-groups flow-nav" aria-label="Tournament menu">
       <div className="flow-nav-main" role="tablist">{TAB_GROUPS.map(group => { const first = visibleTabs(group)[0] ?? group.tabs[0]; const active = currentGroup.label === group.label; return <button type="button" key={group.label} role="tab" aria-selected={active} className={active ? 'active' : ''} onClick={() => onOpenTab(first, first === 'setup' ? progress.currentStep : null)}>{groupLabel(group.label)}{group.label === 'Teams' && workflow.applicationsPending > 0 ? <span className="tab-badge">{workflow.applicationsPending}</span> : null}</button> })}</div>
       {visibleTabs(currentGroup).length > 1 && <div className="cockpit-group-tabs flow-nav-sub" role="tablist" aria-label={groupLabel(currentGroup.label)}>{visibleTabs(currentGroup).map(item => <button type="button" key={item} ref={tab === item ? scrollTabIntoView : undefined} role="tab" aria-selected={tab === item} className={tab === item ? 'active' : ''} onClick={() => onOpenTab(item, item === 'setup' ? progress.currentStep : null)}>{TAB_LABELS.find(label => label.tab === item)?.label ?? item}{item === 'applications' && workflow.applicationsPending > 0 ? <span className="tab-badge">{workflow.applicationsPending}</span> : null}</button>)}</div>}
@@ -447,6 +448,7 @@ export function TournamentWorkspace({ client, user, organization, tournamentId, 
         onOpenTab={onOpenTab}
         onBack={onBack}
       />, 'Full status, lifecycle and history')}</>}
+    </div>
   </div>
 }
 
