@@ -278,7 +278,10 @@ function TournamentList({ records, onCreateTournament }: { records: Record<strin
         <label className="tl-sort">Sort: <select aria-label="Sort tournaments" value={sort} onChange={event => setSort(event.target.value as TournamentSort)}><option value="updated">Recently updated</option><option value="starting">Starting soonest</option><option value="name">Name A–Z</option></select></label>
       </div>
       {!filtered.length ? <Empty message={records.length ? 'No published tournaments match these filters.' : 'No published tournaments are available yet.'} />
-        : <ul className="tl-grid">{paged.items.map(record => <li key={String(record.id)}><TournamentTile record={record} detail={details.get(String(record.id))} capacity={capacityById.get(String(record.id))} full /></li>)}</ul>}
+        : <div className="tl-masterdetail">
+            <ul className="tl-grid">{paged.items.map(record => <li key={String(record.id)}><TournamentTile record={record} detail={details.get(String(record.id))} capacity={capacityById.get(String(record.id))} full /></li>)}</ul>
+            {sorted[0] ? <aside className="tl-detail"><TournamentTile record={sorted[0]} detail={details.get(String(sorted[0].id))} capacity={capacityById.get(String(sorted[0].id))} full /></aside> : null}
+          </div>}
       <NumberedPager page={paged.page} pages={paged.pages} onPage={setPage} label="Tournament pages" />
     </div>
     <IslandCallToAction title="Bring your island together through sport." actionLabel="Organize a Tournament" onAction={onCreateTournament} />
