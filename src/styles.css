@@ -29,6 +29,7 @@ html.dark .flow-rail-dot { background: #1e3a5f; color: #9FDCE8; }
 html.dark .flow-rail-step.is-done .flow-rail-dot { background: #00CFE8; color: #041827; }
 @media (prefers-reduced-motion: reduce) { .flow-card, .flow-panel { transition: none; } .flow-rail-dot { transition: none; } }
 @media (max-width: 640px) { .flow-cards { grid-template-columns: 1fr !important; } .flow-home-grid { grid-template-columns: 1fr !important; } }
+@media (max-width: 640px) { html { font-size: 14px; } .ed-sr-title, .lp-hero-title { font-size: clamp(1.4rem, 6vw, 2rem); } }
 .flow-dashboard { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 16px; align-items: start; }
 .flow-dashboard-main, .flow-dashboard-side { display: grid; gap: 16px; min-width: 0; }
 .flow-cover-fullbleed { width: 100%; max-width: 100%; }
