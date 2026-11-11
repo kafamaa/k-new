@@ -229,7 +229,14 @@ export function advancementFor(stage: CompetitionStage, matches: StageMatch[], g
   if (stage.format === 'knockout') return knockoutAdvancement(stage, stageMatches)
   if (stage.format === 'groups_knockout') return groupAdvancement(stage, stageMatches, groups, {}, cards)
   if (stage.format === 'round_robin_then_final') return topToFinalAdvancement(stage, stageMatches, cards)
-  if ((stage.format === 'round_robin' || stage.format === 'two_leg') && Number(stage.rules.playoff_teams ?? 0) >= 2) return leagueAdvancement(stage, stageMatches, cards)
+  if (stage.format === 'round_robin' || stage.format === 'two_leg') {
+    const teams = [...new Set(stageMatches.flatMap(match => [match.homeTeamId, match.awayTeamId]).filter((id): id is string => Boolean(id)))]
+    const places = Number(stage.rules.playoff_teams ?? 0) || teams.length
+    if (places >= 2) {
+      const patched = { ...stage, rules: { ...stage.rules, playoff_teams: places } }
+      return leagueAdvancement(patched, stageMatches, cards)
+    }
+  }
   return null
 }
 
