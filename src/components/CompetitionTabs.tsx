@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import { Award, GitBranch, Loader2, Pencil, RefreshCw, ShieldCheck, Trash2, Trophy } from 'lucide-react'
-import { advancementFor, createNextRound, fairPlayFor, latestStage, type CardPoints, loadCompetitionStructure, rankedStageTable, semiFinalLosers, thirdPlaceEnabled, type CompetitionStage, type StageGroup, type StageMatch } from '../lib/advancement'
+import { advancementFor, createNextRound, fairPlayFor, latestStage, semiFinalLosers, thirdPlaceEnabled, unresolvedStageMatches, type CardPoints, loadCompetitionStructure, rankedStageTable, type CompetitionStage, type StageGroup, type StageMatch } from '../lib/advancement'
 import { configFromRules, qualificationFor, TIEBREAKER_LABELS } from '../lib/tournamentEngine'
 import { bracketConflictList } from '../lib/bracketConflicts'
 import { replaceMatchParticipants } from '../lib/engineStore'
@@ -103,7 +103,29 @@ export function NextRoundPanel({ client, user, tournamentId, teamNames, canManag
   const { structure, error } = useStructure(client, tournamentId, reloadKey)
   const [busy, setBusy] = useState(false)
   const [actionError, setActionError] = useState('')
-  // Auto-advancement disabled: organizers generate next rounds manually for stability.
+  const autoDone = useRef<Set<string>>(new Set())
+  useEffect(() => {
+    if (!structure || !canManage) return
+    const categoryIds = [...new Set(structure.stages.map(stage => stage.categoryId))]
+    for (const categoryId of categoryIds) {
+      const stage = latestStage(structure.stages, categoryId)
+      if (!stage) continue
+      const plan = advancementFor(stage, structure.matches, structure.groups, structure.cards)
+      if (!plan || plan.problems.length || plan.fixtures.length === 0) continue
+      if (autoDone.current.has(stage.id)) continue
+      // Only auto-generate when every match in the stage is confirmed.
+      const stageMatches = structure.matches.filter(match => match.stageId === stage.id)
+      if (unresolvedStageMatches(stageMatches).length > 0) continue
+      autoDone.current.add(stage.id)
+      void createNextRound(client, user.id, tournamentId, stage, plan, { thirdPlace: thirdPlaceEnabled(structure.stages, stage.categoryId) && !structure.stages.some(item => item.rules.third_place_match === true && item.rules.previous_stage_id === stage.id) ? semiFinalLosers(stage, structure.matches) : null })
+        .then(result => {
+          if (result.error) { autoDone.current.delete(stage.id); return }
+          onNotice(`${result.fixtureCount} fixture${result.fixtureCount === 1 ? '' : 's'} auto-created for the next round.`)
+          setReloadKey(value => value + 1)
+          onChanged()
+        })
+    }
+  }, [structure, canManage, client, user.id, tournamentId, onNotice, onChanged])
   if (error) return <div className="form-error" role="alert">Competition stages are unavailable: {error}</div>
   if (!structure) return null
   const categoryIds = [...new Set(structure.stages.map(stage => stage.categoryId))]
