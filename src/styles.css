@@ -30,6 +30,20 @@ html.dark .flow-rail-step.is-done .flow-rail-dot { background: #00CFE8; color: #
 @media (prefers-reduced-motion: reduce) { .flow-card, .flow-panel { transition: none; } .flow-rail-dot { transition: none; } }
 @media (max-width: 640px) { .flow-cards { grid-template-columns: 1fr !important; } .flow-home-grid { grid-template-columns: 1fr !important; } }
 @media (max-width: 640px) { html { font-size: 14px; } .ed-sr-title, .lp-hero-title { font-size: clamp(1.4rem, 6vw, 2rem); } }
+/* Global mobile safety net: collapse fixed grids, prevent overflow. */
+@media (max-width: 720px) {
+  [class*="grid"] { min-width: 0; }
+  .flow-dashboard, .cockpit-body, .tl-masterdetail, .sq-two, .sq-info-row, .sq-fields { grid-template-columns: 1fr !important; }
+  .flow-cards-6, .flow-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .lp-discover, .tl-grid, .ic-grid { grid-template-columns: 1fr !important; }
+  .lp-sport-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .lp-match-cards { grid-template-columns: 1fr !important; }
+  .ed-sport-row { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  img, video, iframe, table { max-width: 100%; }
+  .ws-shell, .organizer-body { grid-template-columns: 1fr !important; }
+  .ws-sidebar, .organizer-nav { display: none; }
+  .ws-bottomnav, .flow-bottomnav { display: grid; }
+}
 .flow-dashboard { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 16px; align-items: start; }
 .flow-dashboard-main, .flow-dashboard-side { display: grid; gap: 16px; min-width: 0; }
 .flow-cover-fullbleed { width: 100%; max-width: 100%; }
