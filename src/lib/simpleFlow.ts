@@ -166,6 +166,7 @@ export function recommendFormat(teamCount: number): FormatPlan | null {
 
 export const FORMAT_CHOICES: Array<{ format: CompetitionFormat; label: string }> = [
   { format: 'round_robin', label: 'League: everyone plays everyone once' },
+  { format: 'round_robin_then_final', label: 'League then final: 1st to final, 2nd vs 3rd semi' },
   { format: 'two_leg', label: 'League: home and away' },
   { format: 'groups_knockout', label: 'Groups, then knockout' },
   { format: 'group_stage', label: 'Groups only' },

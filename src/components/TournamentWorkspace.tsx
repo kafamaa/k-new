@@ -97,7 +97,7 @@ const STAGE_FIELDS: Record<number, StageField[]> = {
     { key: 'rosterDeadline', label: 'Roster submission deadline', type: 'datetime' },
   ],
   6: [
-    { key: 'format', label: 'Competition format', type: 'select', options: ['round_robin', 'knockout', 'single_elimination', 'group_stage', 'groups_then_knockout', 'groups_only', 'two_leg'] },
+    { key: 'format', label: 'Competition format', type: 'select', options: ['round_robin', 'round_robin_then_final', 'knockout', 'single_elimination', 'group_stage', 'groups_then_knockout', 'groups_only', 'two_leg'] },
     { key: 'tieBreaker', label: 'Primary tie-breaker', type: 'select', options: ['head_to_head', 'goal_difference', 'goals_scored'] },
   ],
   7: [{ key: 'rules', label: 'Rules and standings notes', type: 'textarea' }],

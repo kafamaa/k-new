@@ -105,7 +105,7 @@ export async function loadTournamentDraw(client: SupabaseClient, tournamentId: s
   return { data: groupDraw((result.data ?? []) as Array<Record<string, unknown>>), available: true }
 }
 
-export const STAGE_FORMAT_LABELS: Record<string, string> = { round_robin: 'League', group_stage: 'Group stage', knockout: 'Knockout', groups_knockout: 'Groups then knockout', two_leg: 'League, home and away' }
+export const STAGE_FORMAT_LABELS: Record<string, string> = { round_robin: 'League', round_robin_then_final: 'League then final', group_stage: 'Group stage', knockout: 'Knockout', groups_knockout: 'Groups then knockout', two_leg: 'League, home and away' }
 
 // --- Registration places and the waitlist ------------------------------------------
 export type PlacesState = { kind: 'unknown' } | { kind: 'open'; remaining: number; total: number } | { kind: 'full'; total: number }

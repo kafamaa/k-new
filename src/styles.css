@@ -58,16 +58,16 @@ html.dark .flow-rail-step.is-done .flow-rail-dot { background: #00CFE8; color: #
 .flow-bottom-bar .flow-bottom-action { background: #00CFE8; color: #041827; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font: 600 13px 'Space Grotesk', sans-serif; }
 @media (max-width: 900px) { .flow-dashboard { grid-template-columns: 1fr; } }
 .cockpit-group-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
-.cockpit-body { display: grid; grid-template-columns: 240px 1fr; gap: 16px; align-items: start; }
+.cockpit-body { display: block; }
 .tl-masterdetail { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 16px; align-items: start; }
 .tl-detail { position: sticky; top: 12px; }
 @media (max-width: 900px) { .tl-masterdetail { grid-template-columns: 1fr; } .tl-detail { display: none; } }
-.cockpit-body > nav.cockpit-groups { position: sticky; top: 12px; align-self: start; }
-.cockpit-body .flow-nav-main { flex-direction: column; width: 100%; gap: 4px; }
-.cockpit-body .flow-nav-main button { width: 100%; text-align: left; justify-content: flex-start; padding: 10px 14px; border-radius: 8px; flex: 1 1 auto; white-space: nowrap; }
-.cockpit-body .flow-nav-main { flex-direction: column !important; }
-@media (max-width: 900px) { .cockpit-body { grid-template-columns: 1fr; } .cockpit-body > nav.cockpit-groups { position: static; } }
-@media (min-width: 1100px) { .cockpit-group-tabs { flex-direction: column; width: 220px; position: sticky; top: 12px; } .cockpit-body { display: grid; grid-template-columns: 220px 1fr; gap: 16px; } }
+
+
+
+
+
+@media (min-width: 1100px) { .cockpit-group-tabs { flex-direction: column; width: 220px; position: sticky; top: 12px; } }
 .flow-home-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
 .flow-home-tabs button { padding: 8px 14px; border: 1px solid rgba(0,0,0,.1); background: transparent; border-radius: 8px; cursor: pointer; font: 600 13px 'Space Grotesk', sans-serif; }
 .flow-home-tabs button.active { background: #0A5E77; color: #fff; border-color: #0A5E77; }
